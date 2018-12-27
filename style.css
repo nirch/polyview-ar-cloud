@@ -1,4 +1,60 @@
+@font-face {
+	font-family: "Futura Bold";
+	src: url("assets/fonts/Futura-ICG-Bold.ttf");
+}
 
+
+/* Navbar */
 .navbar-logo > img {
     height: 40px;
+}
+
+/* Footer */
+footer {
+    padding: 25px;
+    text-align: center;
+}
+
+ul.social-buttons {
+    margin-bottom: 0;
+}
+
+.list-inline {
+    padding-left: 0;
+    list-style: none;
+}
+
+.list-inline-item {
+    display: inline-block;
+}
+
+ul.social-buttons li a {
+    font-size: 20px;
+    line-height: 40px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    color: white;
+    border-radius: 100%;
+    outline: none;
+    background-color: #212529;
+}
+
+ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
+    background-color: #147abf;
+}
+
+footer span.copyright {
+    font-size: 90%;
+    line-height: 40px;
+    text-transform: none;
+    font-family: "Futura Bold", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* 404 */
+#not-found {
+    height:calc(100vh - 56px - 115px)
 }

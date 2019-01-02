@@ -1,5 +1,5 @@
 
-var app = angular.module("arCloud", ['ngRoute']);
+var app = angular.module("arCloud", ['ngRoute', 'ng.deviceDetector']);
 
 app.config(function($routeProvider) {
     $routeProvider

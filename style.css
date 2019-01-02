@@ -62,3 +62,8 @@ footer span.copyright {
 #not-found {
     height:calc(100vh - 56px - 115px)
 }
+
+/* Project Gallery */
+.project-item {
+    cursor: pointer;
+}

@@ -5,13 +5,13 @@
                 <h2 class="section-heading">{{customer.displayName}}'s Projects</h2>
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="col-md-4 my-3" ng-repeat="(modelKey, model) in models">
-                <div class="card demo-item text-center" ng-click="openModel(modelKey)">
-                    <img class="card-img-top" ng-src="{{model.thumbnail}}" alt="Card image cap">
-                        <h5 class="card-title">{{model.name}}</h5>
+        <div class="row">
+            <div class="col-md-4 my-3" ng-repeat="project in projects">
+                <div class="card project-item text-center" ng-click="openProject(project)">
+                    <img class="card-img-top" ng-src="{{project.thumbnailUrl}}" alt="{{project.displayName}}">
+                        <h5 class="card-title">{{project.displayName}}</h5>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </section>

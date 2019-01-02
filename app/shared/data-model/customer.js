@@ -1,15 +1,16 @@
 
-app.factory("customer", function ($location, $q) {
+app.factory("customerSrv", function ($location, $q) {
 
     let activeCustomer = null;
 
     class Customer {
-        constructor(id, techName, displayName, logoUrl, websiteUrl) {
-            this.id = id;
-            this.techName = techName;
-            this.displayName = displayName;
-            this.logoUrl = logoUrl;
-            this.websiteUrl = websiteUrl;
+        constructor(parseCustomer) {
+            this.id = parseCustomer.id;
+            this.techName = parseCustomer.get("techName");
+            this.displayName = parseCustomer.get("displayName");
+            this.logoUrl = parseCustomer.get("logo")._url;
+            this.websiteUrl = parseCustomer.get("websiteUrl");
+            this.parseCustomer = parseCustomer;
         }
     }
 
@@ -28,8 +29,7 @@ app.factory("customer", function ($location, $q) {
             query.first().then((result) => {
                 if (result) {
                     console.log('Customer Parse: ', result);
-                    activeCustomer = new Customer(result.id, result.get("techName"),
-                        result.get("displayName"), result.get("logo")._url, result.get("websiteUrl"));
+                    activeCustomer = new Customer(result);
                     console.log(activeCustomer);
 
                     async.resolve(activeCustomer);

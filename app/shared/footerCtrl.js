@@ -1,7 +1,7 @@
 
-app.controller("footerCtrl", function($scope, customer) {
+app.controller("footerCtrl", function($scope, customerSrv) {
 
-    customer.getActive().then(customer => {
+    customerSrv.getActive().then(customer => {
         $scope.customer = customer;
     });
 

@@ -1,8 +1,12 @@
 
-app.controller('customerCtrl', function($scope, customer) {
+app.controller('customerCtrl', function($scope, customerSrv, projectsSrv) {
 
-    customer.getActive().then(customer => {
+    customerSrv.getActive().then(customer => {
         $scope.customer = customer;
+
+        projectsSrv.getByCustomer(customer).then(projects => {
+            $scope.projects = projects;
+        });
     });
 
 })

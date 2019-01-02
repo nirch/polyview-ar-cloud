@@ -54,6 +54,10 @@ footer span.copyright {
     font-family: "Futura Bold", 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.customer-logo img {
+    height: 40px;
+}
+
 /* 404 */
 #not-found {
     height:calc(100vh - 56px - 115px)

@@ -1,4 +1,4 @@
 
-app.controller('customerCtrl', function($scope) {
+app.controller('customerCtrl', function($scope, customer) {
     $scope.page = "Customer Page"
 })

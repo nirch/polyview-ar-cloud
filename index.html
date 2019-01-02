@@ -41,7 +41,7 @@
     <script src="app/project/projectCtrl.js"></script>
     <script src="app/model/modelCtrl.js"></script>
     <script src="app/shared/data-model/customer.js"></script>
-
+    <script src="app/shared/footerCtrl.js"></script>
     <title>Document</title>
 </head>
 
@@ -62,11 +62,11 @@
 
     <ng-view></ng-view>
 
-    <footer>
+    <footer ng-controller="footerCtrl">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Polyview 2018</span>
+                    <span class="copyright">Copyright &copy; {{customer.displayName}} 2018</span>
                 </div>
                 <div class="col-md-4">
                     <ul class="list-inline social-buttons">
@@ -78,8 +78,8 @@
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <a class="customer-logo" href="http://www.polyview3d.com" target="_blank">
-                        <img src="assets/images/polyview-logo-black.png" alt="polyview logo white">
+                    <a class="customer-logo" href="{{customer.websiteUrl}}" target="_blank">
+                        <img ng-src="{{customer.logoUrl}}" alt="polyview logo white">
                     </a>
                 </div>
             </div>

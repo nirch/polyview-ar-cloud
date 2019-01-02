@@ -4,11 +4,12 @@ app.factory("customer", function ($location, $q) {
     let activeCustomer = null;
 
     class Customer {
-        constructor(id, techName, displayName, logoUrl) {
+        constructor(id, techName, displayName, logoUrl, websiteUrl) {
             this.id = id;
             this.techName = techName;
             this.displayName = displayName;
             this.logoUrl = logoUrl;
+            this.websiteUrl = websiteUrl;
         }
     }
 
@@ -28,7 +29,7 @@ app.factory("customer", function ($location, $q) {
                 if (result) {
                     console.log('Customer Parse: ', result);
                     activeCustomer = new Customer(result.id, result.get("techName"),
-                        result.get("displayName"), result.get("logo")._url);
+                        result.get("displayName"), result.get("logo")._url, result.get("websiteUrl"));
                     console.log(activeCustomer);
 
                     async.resolve(activeCustomer);

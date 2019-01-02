@@ -1,4 +1,8 @@
 
 app.controller('customerCtrl', function($scope, customer) {
-    $scope.page = "Customer Page"
+
+    customer.getActive().then(customer => {
+        $scope.customer = customer;
+    });
+
 })

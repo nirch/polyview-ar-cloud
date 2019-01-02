@@ -1,10 +1,10 @@
 
-app.controller('customerCtrl', function($scope, customerSrv, projectsSrv, $location) {
+app.controller('customerCtrl', function($scope, customerSrv, projectSrv, $location) {
 
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;
 
-        projectsSrv.getByCustomer(customer).then(projects => {
+        projectSrv.getByCustomer(customer).then(projects => {
             $scope.projects = projects;
         });
     });

@@ -1,11 +1,15 @@
 
-app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectsSrv) {
+app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv) {
 
     customerSrv.getActive().then(customer => {
         //$scope.customer = customer;
 
-        projectsSrv.getByCustomerAndProjectName(customer, $routeParams.projectName).then(project => {
+        projectSrv.getByName(customer, $routeParams.projectName).then(project => {
             $scope.project = project;
+
+            modelSrv.getByProject(project).then(models => {
+                $scope.models = models;
+            })
         });
     });
 

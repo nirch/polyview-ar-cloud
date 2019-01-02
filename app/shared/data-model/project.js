@@ -1,5 +1,5 @@
 
-app.factory("projectsSrv", function ($q) {
+app.factory("projectSrv", function ($q) {
 
 
     class Project {
@@ -33,12 +33,12 @@ app.factory("projectsSrv", function ($q) {
         return async.promise;
     }
 
-    function getByCustomerAndProjectName(customer, techName) {
+    function getByName(customer, name) {
         let async = $q.defer();
 
         const ParseProject = Parse.Object.extend('Project');
         const query = new Parse.Query(ParseProject);
-        query.equalTo("techName", techName);
+        query.equalTo("techName", name);
         query.equalTo("customerId", customer.parseCustomer);
         query.first().then(result => {
             let project = new Project(result);
@@ -54,7 +54,7 @@ app.factory("projectsSrv", function ($q) {
 
     return {
         getByCustomer: getByCustomer,
-        getByCustomerAndProjectName: getByCustomerAndProjectName
+        getByName: getByName
     }
 });
 

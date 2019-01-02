@@ -33,8 +33,28 @@ app.factory("projectsSrv", function ($q) {
         return async.promise;
     }
 
+    function getByCustomerAndProjectName(customer, techName) {
+        let async = $q.defer();
+
+        const ParseProject = Parse.Object.extend('Project');
+        const query = new Parse.Query(ParseProject);
+        query.equalTo("techName", techName);
+        query.equalTo("customerId", customer.parseCustomer);
+        query.first().then(result => {
+            let project = new Project(result);
+            async.resolve(project);
+        }, error => {
+            console.error('Error while fetching project', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
+
+
     return {
-        getByCustomer: getByCustomer
+        getByCustomer: getByCustomer,
+        getByCustomerAndProjectName: getByCustomerAndProjectName
     }
 });
 

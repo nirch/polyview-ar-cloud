@@ -1,5 +1,5 @@
 
-app.controller('customerCtrl', function($scope, customerSrv, projectsSrv) {
+app.controller('customerCtrl', function($scope, customerSrv, projectsSrv, $location) {
 
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;
@@ -8,5 +8,9 @@ app.controller('customerCtrl', function($scope, customerSrv, projectsSrv) {
             $scope.projects = projects;
         });
     });
+
+    $scope.openProject = function(project) {
+        $location.path("/" + project.techName);
+    }
 
 })

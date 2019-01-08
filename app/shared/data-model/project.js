@@ -41,8 +41,12 @@ app.factory("projectSrv", function ($q) {
         query.equalTo("techName", name);
         query.equalTo("customerId", customer.parseCustomer);
         query.first().then(result => {
-            let project = new Project(result);
-            async.resolve(project);
+            if (result) {
+                let project = new Project(result);
+                async.resolve(project);
+            } else {
+                async.reject(404);
+            }
         }, error => {
             console.error('Error while fetching project', error);
             async.reject(error);

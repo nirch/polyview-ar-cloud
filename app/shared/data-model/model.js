@@ -16,12 +16,15 @@ app.factory("modelSrv", function ($q) {
         }
     }
 
-    function getByProject(project) {
+    function getByProject(project, onlyListed = true) {
         let async = $q.defer();
 
         const ParseModel = Parse.Object.extend('Model');
         const query = new Parse.Query(ParseModel);
         query.equalTo("projectId", project.parseProject);
+        if (onlyListed) {
+            query.equalTo("isListed", true);
+        }
         query.find().then(results => {
             console.log('Models: ', results);
             let models = [];

@@ -23,7 +23,7 @@ app.factory("modelSrv", function ($q) {
         const query = new Parse.Query(ParseModel);
         query.equalTo("projectId", project.parseProject);
         if (onlyListed) {
-            query.equalTo("isListed", true);
+            query.equalTo("isListed", onlyListed);
         }
         query.find().then(results => {
             console.log('Models: ', results);
@@ -40,13 +40,16 @@ app.factory("modelSrv", function ($q) {
         return async.promise;
     }
 
-    function getByName(project, name) {
+    function getByName(project, name, onlyLive = true) {
         let async = $q.defer();
 
         const ParseModel = Parse.Object.extend('Model');
         const query = new Parse.Query(ParseModel);
         query.equalTo("techName", name);
         query.equalTo("projectId", project.parseProject);
+        if (onlyLive) {
+            query.equalTo("isLive", onlyLive);
+        }
         query.first().then(result => {
             if (result) {
                 let model = new Model(result);

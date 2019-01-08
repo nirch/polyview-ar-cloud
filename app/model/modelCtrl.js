@@ -1,7 +1,8 @@
 
 app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, deviceDetector, $sce) {
-    $scope.page = "Model Page"
+
     var isAppleArQuickLook = false;
+    $scope.notFound = false;
 
     // Loading the model
     customerSrv.getActive().then(customer => {
@@ -12,7 +13,15 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
 
                 // Checking if there is a need to show Apple's AR Quick Look
                 checkAppleArQuickLook();
-            })
+            }, error => {
+                if (error === 404) {
+                    $scope.notFound = true;
+                }
+            });
+        }, error => {
+            if (error === 404) {
+                $scope.notFound = true;
+            }
         });
     });
 

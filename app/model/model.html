@@ -1,4 +1,4 @@
-<section class="bg-light">
+<section ng-if="!notFound" class="bg-light">
     <div class="container">
         <div class="row pt-5">
             <div class="col-lg-12 text-center">
@@ -19,3 +19,4 @@
         </div>
     </div>
 </section>
+<div ng-if="notFound" ng-include="'app/shared/404.html'"></div>

@@ -48,8 +48,12 @@ app.factory("modelSrv", function ($q) {
         query.equalTo("techName", name);
         query.equalTo("projectId", project.parseProject);
         query.first().then(result => {
-            let model = new Model(result);
-            async.resolve(model);
+            if (result) {
+                let model = new Model(result);
+                async.resolve(model);
+            } else {
+                async.reject(404);
+            }
         }, error => {
             console.error('Error while fetching project', error);
             async.reject(error);

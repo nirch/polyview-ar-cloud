@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Angular JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-route.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <!-- Parse -->
+    <script src="../node_modules/parse/dist/parse.min.js"></script>
+    <script>
+        Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
+        Parse.initialize(
+            'b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE', // This is your Application ID
+            'NeokbBCMAWxomOjJgiXeduKrQLundR1nHLxAysbG' // This is your Javascript key
+        );
+    </script>
+
+    <!-- angularjs service for detecting device/os/browser details -->
+    <script type="text/javascript" src="../node_modules/re-tree/re-tree.min.js"></script>
+    <script type="text/javascript" src="../node_modules/ua-device-detector/ua-device-detector.min.js"></script>
+    <script type="text/javascript" src="../node_modules/ng-device-detector/ng-device-detector.min.js"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <!-- <div class="viewer-container" ng-hide="showAppleArQuickLook()">
+        <iframe class="viewer-iframe" src="https://clara.io/player/v2/a2c2f341-87c4-4204-bca9-738cebf62dc9?tools=hide"></iframe>
+    </div> -->
+
+
+    <iframe class="viewer-iframe" src="https://clara.io/player/v2/a2c2f341-87c4-4204-bca9-738cebf62dc9?tools=hide"></iframe>
+
+
+
+
+</body>
+
+</html>

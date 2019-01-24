@@ -46,7 +46,7 @@
     <script src="app/project/projectCtrl.js"></script>
     <script src="app/model/modelCtrl.js"></script>
     <script src="app/shared/data-model/customer.js"></script>
-    <script src="app/shared/footerCtrl.js"></script>
+    <script src="app/shared/navbarCtrl.js"></script>
     <script src="app/shared/data-model/project.js"></script>
     <script src="app/shared/data-model/model.js"></script>
     <title>Document</title>
@@ -54,44 +54,17 @@
 
 <body ng-app="arCloud">
 
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-logo pull-left" href="http://www.polyview3d.com" target="_blank">
-                <img src="assets/images/polyview-logo-white.png" alt="polyview logo white">
-            </a>
-            <!-- <ul class="navbar-nav text-uppercase ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/demos">More Demos</a>
-                </li>
-            </ul> -->
-        </div>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-center" ng-controller="navbarCtrl">
+        <a class="navbar-brand" href="#">{{title}}</a>
+        <a class="navbar-logo pull-left" href="{{customer.websiteUrl}}" target="_blank">
+            <img ng-src="{{customer.logoUrl}}" alt="polyview logo white">
+        </a>
     </nav>
 
     <ng-view></ng-view>
 
     <footer ng-controller="footerCtrl">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; {{customer.displayName}} 2018</span>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline social-buttons">
-                        <li class="list-inline-item">
-                            <a ng-href="https://www.facebook.com/Polyview3d/" target="_blank">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <a class="customer-logo" href="{{customer.websiteUrl}}" target="_blank">
-                        <img ng-src="{{customer.logoUrl}}" alt="polyview logo white">
-                    </a>
-                </div>
-            </div>
-        </div>
-
+        Powered by <a class="polyview" href="http://www.polyview3d.com" target="_blank">Polyview</a>
     </footer>
 
 </body>

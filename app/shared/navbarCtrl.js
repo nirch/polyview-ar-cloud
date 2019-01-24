@@ -1,5 +1,5 @@
 
-app.controller("footerCtrl", function($scope, customerSrv) {
+app.controller("navbarCtrl", function($scope, customerSrv) {
 
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;

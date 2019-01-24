@@ -3,59 +3,32 @@
 	src: url("assets/fonts/Futura-ICG-Bold.ttf");
 }
 
+body {
+    background-color: var(--light);
+}
 
 /* Navbar */
 .navbar-logo > img {
     height: 40px;
 }
 
+.navbar-brand {
+    font-family: "Futura Bold"
+}
+
 /* Footer */
 footer {
+    font-family: "Futura Bold";
     padding: 25px;
     text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: white;
 }
 
-ul.social-buttons {
-    margin-bottom: 0;
-}
-
-.list-inline {
-    padding-left: 0;
-    list-style: none;
-}
-
-.list-inline-item {
-    display: inline-block;
-}
-
-ul.social-buttons li a {
-    font-size: 20px;
-    line-height: 40px;
-    display: block;
-    width: 40px;
-    height: 40px;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-    color: white;
-    border-radius: 100%;
-    outline: none;
-    background-color: #212529;
-}
-
-ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
-    background-color: #147abf;
-}
-
-footer span.copyright {
-    font-size: 90%;
-    line-height: 40px;
-    text-transform: none;
-    font-family: "Futura Bold", 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-.customer-logo img {
-    height: 40px;
+footer > a.polyview {
+    color: #212529;
 }
 
 /* 404 */

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="embedApp">
 
 <head>
 
@@ -26,6 +26,7 @@
     <script type="text/javascript" src="../node_modules/ua-device-detector/ua-device-detector.min.js"></script>
     <script type="text/javascript" src="../node_modules/ng-device-detector/ng-device-detector.min.js"></script>
 
+    <script src="app.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,16 +37,7 @@
 
 <body>
 
-
-    <!-- <div class="viewer-container" ng-hide="showAppleArQuickLook()">
-        <iframe class="viewer-iframe" src="https://clara.io/player/v2/a2c2f341-87c4-4204-bca9-738cebf62dc9?tools=hide"></iframe>
-    </div> -->
-
-
-    <iframe class="viewer-iframe" src="https://clara.io/player/v2/a2c2f341-87c4-4204-bca9-738cebf62dc9?tools=hide"></iframe>
-
-
-
+    <ng-view></ng-view>
 
 </body>
 

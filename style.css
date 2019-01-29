@@ -8,12 +8,38 @@ body {
 }
 
 /* Navbar */
+.breadcrumb-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+}
+
+.breadcrumb-nav > .breadcrumb {
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.breadcrumb-item {
+    font-family: "Futura Bold";
+}
+
+.breadcrumb-item > a {
+    color: white;
+}
+
+.navbar-logo {
+    padding: 0 0.5rem;
+}
+
 .navbar-logo > img {
     height: 40px;
 }
 
-.navbar-brand {
-    font-family: "Futura Bold"
+.breadcrumb {
+    justify-content: center;
 }
 
 /* Shared */

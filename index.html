@@ -29,8 +29,8 @@
             'b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE', // This is your Application ID
             'NeokbBCMAWxomOjJgiXeduKrQLundR1nHLxAysbG' // This is your Javascript key
         );
-    </script>        
-    
+    </script>
+
     <!-- angularjs service for detecting device/os/browser details -->
     <script type="text/javascript" src="node_modules/re-tree/re-tree.min.js"></script>
     <script type="text/javascript" src="node_modules/ua-device-detector/ua-device-detector.min.js"></script>
@@ -54,16 +54,20 @@
 
 <body ng-app="arCloud">
 
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-center" ng-controller="navbarCtrl">
-        <a class="navbar-brand" href="#">{{title}}</a>
-        <a class="navbar-logo pull-left" href="{{customer.websiteUrl}}" target="_blank">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav bg-dark" ng-controller="navbarCtrl">
+        <ol class="breadcrumb bg-dark">
+            <li class="breadcrumb-item"><a href="#">Polyview</a></li>
+            <li class="breadcrumb-item"><a href="#">Real Estate</a></li>
+            <li class="breadcrumb-item active" aria-current="page">North Penthhouse</li>
+        </ol>
+        <a class="navbar-logo" href="{{customer.websiteUrl}}" target="_blank">
             <img ng-src="{{customer.logoUrl}}" alt="polyview logo white">
         </a>
     </nav>
 
     <ng-view></ng-view>
 
-    <footer ng-controller="footerCtrl">
+    <footer>
         Powered by <a class="polyview" href="http://www.polyview3d.com" target="_blank">Polyview</a>
     </footer>
 

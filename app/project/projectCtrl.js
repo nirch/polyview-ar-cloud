@@ -1,14 +1,14 @@
 
-app.controller('projectCtrl', function($scope, $rootScope, $routeParams, customerSrv, projectSrv, modelSrv, $location) {
+app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $location) {
 
     $scope.notFound = false;
 
     // Loading the project and models
     customerSrv.getActive().then(customer => {
-        $rootScope.title = customer.displayName;
+        $scope.customer = customer;
+        $scope.customerHref= "#!/";
         projectSrv.getByName(customer, $routeParams.projectName).then(project => {
             $scope.project = project;
-            $rootScope.title += " | " + project.displayName;
             modelSrv.getByProject(project).then(models => {
                 $scope.models = models;
             })

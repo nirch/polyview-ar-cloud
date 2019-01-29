@@ -46,24 +46,13 @@
     <script src="app/project/projectCtrl.js"></script>
     <script src="app/model/modelCtrl.js"></script>
     <script src="app/shared/data-model/customer.js"></script>
-    <script src="app/shared/navbarCtrl.js"></script>
     <script src="app/shared/data-model/project.js"></script>
     <script src="app/shared/data-model/model.js"></script>
+    <script src="app/shared/navbar-consumer/navbar-consumer.js"></script>
     <title>Document</title>
 </head>
 
 <body ng-app="arCloud">
-
-    <nav aria-label="breadcrumb" class="breadcrumb-nav bg-dark" ng-controller="navbarCtrl">
-        <ol class="breadcrumb bg-dark">
-            <li class="breadcrumb-item"><a href="#">Polyview</a></li>
-            <li class="breadcrumb-item"><a href="#">Real Estate</a></li>
-            <li class="breadcrumb-item active" aria-current="page">North Penthhouse</li>
-        </ol>
-        <a class="navbar-logo" href="{{customer.websiteUrl}}" target="_blank">
-            <img ng-src="{{customer.logoUrl}}" alt="polyview logo white">
-        </a>
-    </nav>
 
     <ng-view></ng-view>
 

@@ -3,6 +3,11 @@
 	src: url("assets/fonts/Futura-ICG-Bold.ttf");
 }
 
+@font-face {
+	font-family: "Futura Light";
+	src: url("assets/fonts/Futura-ICG-Light.ttf");
+}
+
 body {
     background-color: var(--light);
 }
@@ -23,11 +28,17 @@ body {
 }
 
 .breadcrumb-item {
-    font-family: "Futura Bold";
+    font-family: "Futura Light";
+    color: white;
+    font-size: 1.25rem;
+}
+
+.breadcrumb-item.active {
+    color: white;
 }
 
 .breadcrumb-item > a {
-    color: white;
+    color: inherit;
 }
 
 .navbar-logo {

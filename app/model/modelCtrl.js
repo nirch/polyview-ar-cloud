@@ -1,17 +1,18 @@
 
-app.controller('modelCtrl', function($scope, $rootScope, $routeParams, customerSrv, projectSrv, modelSrv, deviceDetector, $sce) {
+app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, deviceDetector, $sce) {
 
     var isAppleArQuickLook = false;
     $scope.notFound = false;
 
     // Loading the model
     customerSrv.getActive().then(customer => {
-        $rootScope.title = customer.displayName;
+        $scope.customer = customer;
+        $scope.customerHref = "#!/";
         projectSrv.getByName(customer, $routeParams.projectName).then(project => {
-            $rootScope.title += " | " + project.displayName;
+            $scope.project = project;
+            $scope.projectHref = "#!/" + project.techName;
             modelSrv.getByName(project, $routeParams.modelName).then(model => {
                 $scope.model = model;
-                $rootScope.title += " | " + model.displayName;
                 $scope.model.claraEmbedId = $sce.trustAsResourceUrl("https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
 
                 // Checking if there is a need to show Apple's AR Quick Look

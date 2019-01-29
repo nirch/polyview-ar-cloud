@@ -1,0 +1,10 @@
+<nav class="breadcrumb-nav bg-dark">
+    <ol class="breadcrumb bg-dark">
+        <li class="breadcrumb-item" ng-class="{active : !project}"><a ng-href="{{customerHref}}">{{customer.displayName}}</a></li>
+        <li ng-if="project" class="breadcrumb-item" ng-class="{active : !model}"><a ng-href="{{projectHref}}">{{project.displayName}}</a></li>
+        <li ng-if="model" class="breadcrumb-item" ng-class="{active : model}">{{model.displayName}}</li>
+    </ol>
+    <a class="navbar-logo" href="{{customer.websiteUrl}}" target="_blank">
+        <img ng-src="{{customer.logoUrl}}" alt="polyview logo white">
+    </a>
+</nav>

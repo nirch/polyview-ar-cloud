@@ -58,7 +58,28 @@ app.factory("modelSrv", function ($q) {
                 async.reject(404);
             }
         }, error => {
-            console.error('Error while fetching project', error);
+            console.error('Error while fetching model', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
+
+    function getById(modelId) {
+        let async = $q.defer();
+
+        const ParseModel = Parse.Object.extend('Model');
+        const query = new Parse.Query(ParseModel);
+        query.equalTo("objectId", modelId);
+        query.first().then(result => {
+            if (result) {
+                let model = new Model(result);
+                async.resolve(model);
+            } else {
+                async.reject(404);
+            }
+        }, error => {
+            console.error('Error while fetching model', error);
             async.reject(error);
         });
 
@@ -68,7 +89,8 @@ app.factory("modelSrv", function ($q) {
 
     return {
         getByProject: getByProject,
-        getByName: getByName
+        getByName: getByName,
+        getById: getById
     }
 });
 

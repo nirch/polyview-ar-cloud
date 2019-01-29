@@ -13,7 +13,8 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
             $scope.projectHref = "#!/" + project.techName;
             modelSrv.getByName(project, $routeParams.modelName).then(model => {
                 $scope.model = model;
-                $scope.model.claraEmbedId = $sce.trustAsResourceUrl("https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
+                //$scope.model.claraEmbedId = $sce.trustAsResourceUrl("https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
+                $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id);
 
                 // Checking if there is a need to show Apple's AR Quick Look
                 checkAppleArQuickLook();

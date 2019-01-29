@@ -1,4 +1,8 @@
 
+body {
+    background-color: inherit;
+}
+
 .viewer-iframe {
     width: 100%;
     height: 100vh;

@@ -10,6 +10,13 @@ app.config(function($routeProvider) {
     });
 });
 
-app.controller("embedCtrl", function($scope, $sce) {
-    $scope.claraEmbedURL = $sce.trustAsResourceUrl("https://clara.io/player/v2/a2c2f341-87c4-4204-bca9-738cebf62dc9?tools=hide");
+app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv) {
+
+    modelSrv.getById($routeParams.modelId).then(model => {
+        $scope.model = model;
+        $scope.model.claraEmbedId = $sce.trustAsResourceUrl("https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
+    });
+
+
+    
 });

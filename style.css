@@ -58,6 +58,10 @@ body {
     font-family: "Futura Bold"
 }
 
+ng-view > section {
+    padding-bottom: 75px;
+}
+
 /* Footer */
 footer {
     font-family: "Futura Bold";

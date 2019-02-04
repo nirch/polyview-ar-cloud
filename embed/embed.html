@@ -1,2 +1,7 @@
 
-<iframe class="viewer-iframe" ng-src="{{model.claraEmbedId}}"></iframe>
+<div class="text-center" ng-if="showAppleArQuickLook()">
+    <a rel="ar" href="{{model.usdzUrl}}">
+        <img class="img-fluid" ng-src="{{model.thumbnailUrl}}">
+    </a>
+</div>
+<iframe class="viewer-iframe" ng-src="{{model.claraEmbedId}}" ng-if="!showAppleArQuickLook()"></iframe>

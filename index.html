@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="arCloud" ng-controller="mainCtrl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 
     <!-- Angular JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
@@ -44,10 +45,10 @@
     <script src="app/shared/data-model/project.js"></script>
     <script src="app/shared/data-model/model.js"></script>
     <script src="app/shared/navbar-consumer/navbar-consumer.js"></script>
-    <title>Document</title>
+    <title>{{title}}</title>
 </head>
 
-<body ng-app="arCloud">
+<body>
 
     <ng-view></ng-view>
 

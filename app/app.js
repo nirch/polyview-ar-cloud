@@ -15,4 +15,9 @@ app.config(function($routeProvider) {
     })
 });
 
+app.controller("mainCtrl", function($scope, customerSrv) {
+  customerSrv.getActive().then(customer => {
+    $scope.title = customer.displayName + "'s 3D Library (Powered by Polyview)"
+  });
+})
 

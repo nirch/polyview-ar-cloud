@@ -1,7 +1,6 @@
 
 app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $sce) {
 
-    var isAppleArQuickLook = false;
     $scope.notFound = false;
 
     // Loading the model
@@ -13,8 +12,14 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
             $scope.projectHref = "#!/" + project.techName;
             modelSrv.getByName(project, $routeParams.modelName).then(model => {
                 $scope.model = model;
-                //$scope.model.claraEmbedId = $sce.trustAsResourceUrl("https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
                 $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id);
+
+                // page view
+                gtag('config', 'UA-115185862-2', {
+                    'page_title' : $scope.customer.displayName + " | " + $scope.project.displayName + " | " + $scope.model.displayName,
+                    'page_path': "/" + $scope.customer.techName + "/" + $scope.project.techName + "/" + $scope.model.techName
+                });
+
             }, error => {
                 if (error === 404) {
                     $scope.notFound = true;

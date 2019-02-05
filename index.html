@@ -23,13 +23,20 @@
 
     <!-- Parse -->
     <script src="node_modules/parse/dist/parse.min.js"></script>
-
     <script>
         Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
         Parse.initialize(
             'b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE', // This is your Application ID
             'NeokbBCMAWxomOjJgiXeduKrQLundR1nHLxAysbG' // This is your Javascript key
         );
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115185862-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
     </script>
 
     <!-- Font Awesome -->

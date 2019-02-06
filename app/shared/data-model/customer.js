@@ -48,8 +48,29 @@ app.factory("customerSrv", function ($location, $q) {
         return async.promise;
     }
 
+    function getById(customerId) {
+        let async = $q.defer();
+
+        const ParseCustomer = Parse.Object.extend('Customer');
+        const query = new Parse.Query(ParseCustomer);
+        query.get(customerId).then(result => {
+            if (result) {
+                let customer = new Customer(result);
+                async.resolve(customer);
+            } else {
+                async.reject(404);
+            }
+        }, error => {
+            console.error('Error while fetching customer', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
+
 
     return {
-        getActive: getActive
+        getActive: getActive,
+        getById: getById
     };
 })

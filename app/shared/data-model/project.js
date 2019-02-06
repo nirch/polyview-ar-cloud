@@ -8,6 +8,7 @@ app.factory("projectSrv", function ($q) {
             this.techName = parseProject.get("techName");
             this.displayName = parseProject.get("displayName");
             this.thumbnailUrl = parseProject.get("thumbnail")._url;
+            this.customerId = parseProject.get("customerId").id;
             this.parseProject = parseProject;
         }
     }
@@ -55,10 +56,30 @@ app.factory("projectSrv", function ($q) {
         return async.promise;
     }
 
+    function getById(projectId) {
+        let async = $q.defer();
+
+        const ParseProject = Parse.Object.extend('Project');
+        const query = new Parse.Query(ParseProject);
+        query.get(projectId).then(result => {
+            if (result) {
+                let project = new Project(result);
+                async.resolve(project);
+            } else {
+                async.reject(404);
+            }
+        }, error => {
+            console.error('Error while fetching project', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
 
     return {
         getByCustomer: getByCustomer,
-        getByName: getByName
+        getByName: getByName,
+        getById: getById
     }
 });
 

@@ -21,6 +21,14 @@
         );
     </script>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115185862-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    </script>
+
     <!-- angularjs service for detecting device/os/browser details -->
     <script type="text/javascript" src="../node_modules/re-tree/re-tree.min.js"></script>
     <script type="text/javascript" src="../node_modules/ua-device-detector/ua-device-detector.min.js"></script>
@@ -28,6 +36,8 @@
 
     <script src="app.js"></script>
     <script src="../app/shared/data-model/model.js"></script>
+    <script src="../app/shared/data-model/project.js"></script>
+    <script src="../app/shared/data-model/customer.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

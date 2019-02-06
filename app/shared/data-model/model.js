@@ -12,6 +12,7 @@ app.factory("modelSrv", function ($q) {
             this.claraId = parseModel.get("claraId");
             this.usdzUrl = parseModel.get("usdz")._url;
             this.thumbnailUrl = parseModel.get("thumbnail")._url;
+            this.projectId = parseModel.get("projectId").id;
             this.parseModel = parseModel;
         }
     }
@@ -70,8 +71,7 @@ app.factory("modelSrv", function ($q) {
 
         const ParseModel = Parse.Object.extend('Model');
         const query = new Parse.Query(ParseModel);
-        query.equalTo("objectId", modelId);
-        query.first().then(result => {
+        query.get(modelId).then(result => {
             if (result) {
                 let model = new Model(result);
                 async.resolve(model);

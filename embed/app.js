@@ -10,7 +10,7 @@ app.config(function($routeProvider) {
     });
 });
 
-app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv, deviceDetector) {
+app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv, deviceDetector, projectSrv, customerSrv) {
 
     modelSrv.getById($routeParams.modelId).then(model => {
         $scope.model = model;
@@ -18,6 +18,26 @@ app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv, devic
 
         // Checking if there is a need to show Apple's AR Quick Look
         checkAppleArQuickLook();
+
+        //alert(model.parseModel.get("projectId").get("techName"));
+        //gtag('config', 'UA-115185862-3');
+
+        // Fetching the porject and customer objects merley for the tracking
+        projectSrv.getById($scope.model.projectId).then(project => {
+            customerSrv.getById(project.customerId).then(customer => {
+                console.log(project.displayName);
+                console.log(customer.displayName);
+
+                // Sending a page view with the viewer type dimension
+                var viewrType = $scope.showAppleArQuickLook() ? "AR Quick Look" : "3D Viewer";
+                gtag('config', 'UA-115185862-3', {
+                    'page_title' : customer.displayName + " | " + project.displayName + " | " + model.displayName,
+                    'page_path': "/" + customer.techName + "/" + project.techName + "/" + model.techName,
+                    'custom_map': {'dimension1': 'viewer_type'}
+                });
+                gtag('event', 'viewer_dimension', {'viewer_type': viewrType});
+            });
+        });
     });
 
     var isAppleArQuickLook = false;

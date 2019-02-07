@@ -89,6 +89,10 @@ footer > a.polyview {
     cursor: pointer;
 }
 
+.card-title {
+    margin: 0.5rem 0;
+}
+
 /* Model Page */
 .viewer-container {
     padding-top: 56.25%;

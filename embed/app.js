@@ -1,5 +1,5 @@
 
-var app = angular.module("embedApp", ["ngRoute", "ng.deviceDetector"]);
+var app = angular.module("embedApp", ["ngRoute", "ng.deviceDetector", "FBAngular"]);
 
 
 app.config(function($routeProvider) {
@@ -39,6 +39,13 @@ app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv, devic
             });
         });
     });
+
+    // Initially, do not go into full screen
+    $scope.isFullscreen = false;
+
+    $scope.toggleFullScreen = function() {
+        $scope.isFullscreen = !$scope.isFullscreen;
+    }
 
     var isAppleArQuickLook = false;
 

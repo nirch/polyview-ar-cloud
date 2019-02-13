@@ -2,19 +2,21 @@
 var app = angular.module("embedApp", ["ngRoute", "ng.deviceDetector", "FBAngular"]);
 
 
-app.config(function($routeProvider) {
+app.config(function ($routeProvider) {
     $routeProvider
-    .when('/:modelId', {
-      templateUrl: 'embed.html',
-      controller: 'embedCtrl'
-    });
+        .when('/:modelId', {
+            templateUrl: 'embed.html',
+            controller: 'embedCtrl'
+        });
 });
 
-app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv, deviceDetector, projectSrv, customerSrv) {
+app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, modelSrv,
+    deviceDetector, projectSrv, customerSrv, Fullscreen) {
 
     modelSrv.getById($routeParams.modelId).then(model => {
         $scope.model = model;
-        $scope.model.claraEmbedId = $sce.trustAsResourceUrl("https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
+        $scope.model.claraEmbedId = $sce.trustAsResourceUrl(
+            "https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
 
         // Checking if there is a need to show Apple's AR Quick Look
         checkAppleArQuickLook();
@@ -31,21 +33,34 @@ app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv, devic
                 // Sending a page view with the viewer type dimension
                 var viewrType = $scope.showAppleArQuickLook() ? "AR Quick Look" : "3D Viewer";
                 gtag('config', 'UA-115185862-3', {
-                    'page_title' : customer.displayName + " | " + project.displayName + " | " + model.displayName,
+                    'page_title': customer.displayName + " | " + project.displayName + " | " + model.displayName,
                     'page_path': "/" + customer.techName + "/" + project.techName + "/" + model.techName,
-                    'custom_map': {'dimension1': 'viewer_type'}
+                    'custom_map': { 'dimension1': 'viewer_type' }
                 });
-                gtag('event', 'viewer_dimension', {'viewer_type': viewrType});
+                gtag('event', 'viewer_dimension', { 'viewer_type': viewrType });
             });
         });
     });
 
-    // Initially, do not go into full screen
-    $scope.isFullscreen = false;
+    // Initially, not in full screen
+    $scope.isInFullScreen = false;
 
-    $scope.toggleFullScreen = function() {
-        $scope.isFullscreen = !$scope.isFullscreen;
+    $scope.toggleFullScreen = function () {
+        // $scope.isFullscreen = !$scope.isFullscreen;
+
+        if (Fullscreen.isEnabled()) {
+            Fullscreen.cancel();
+        }
+        else {
+            Fullscreen.all();
+        }
     }
+
+    // Catching event when going fullscreen or canceling it
+    $rootScope.$on('FBFullscreen.change', function(events, isFullScreen){
+        $scope.isInFullScreen = isFullScreen;
+        $scope.$apply();
+    })
 
     var isAppleArQuickLook = false;
 
@@ -59,7 +74,7 @@ app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv, devic
         }
     }
 
-    $scope.showAppleArQuickLook = function() {
+    $scope.showAppleArQuickLook = function () {
         return isAppleArQuickLook;
     }
 
@@ -73,6 +88,6 @@ app.controller("embedCtrl", function($scope, $sce, $routeParams, modelSrv, devic
         } else {
             return false;
         }
-    }    
+    }
 
 });

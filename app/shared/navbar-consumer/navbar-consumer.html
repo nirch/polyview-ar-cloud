@@ -7,4 +7,5 @@
         <li ng-if="project" class="breadcrumb-item" ng-class="{active : !model}"><a ng-href="{{projectHref}}">{{project.displayName}}</a></li>
         <li ng-if="model" class="breadcrumb-item" ng-class="{active : model}">{{model.displayName}}</li>
     </ol>
+    <i ng-if="model" class="fas fa-info-circle" style="color:white" data-toggle="tooltip" title="Clicking on the image on iOS 12 will open an AR experience" data-placement="bottom"></i>
 </nav>

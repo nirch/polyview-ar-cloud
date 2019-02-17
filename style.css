@@ -55,6 +55,10 @@ body {
     justify-content: center;
 }
 
+.fa-info-circle {
+    cursor: pointer;
+}
+
 /* Shared */
 .section-heading {
     font-family: "Futura Bold"

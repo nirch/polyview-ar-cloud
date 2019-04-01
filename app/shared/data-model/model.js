@@ -13,6 +13,7 @@ app.factory("modelSrv", function ($q) {
             this.usdzUrl = parseModel.get("usdz")._url;
             this.thumbnailUrl = parseModel.get("thumbnail")._url;
             this.projectId = parseModel.get("projectId").id;
+            this.order = parseModel.get("order") ? parseModel.get("order") : 0; // default order is 0
             this.parseModel = parseModel;
         }
     }

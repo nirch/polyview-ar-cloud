@@ -11,6 +11,7 @@ app.factory("modelSrv", function ($q) {
             this.isLive = parseModel.get("isLive");
             this.claraId = parseModel.get("claraId");
             this.usdzUrl = parseModel.get("usdz")._url;
+            this.gltfUrl = parseModel.get("gltf") ? parseModel.get("gltf")._url : null;
             this.thumbnailUrl = parseModel.get("thumbnail")._url;
             this.projectId = parseModel.get("projectId").id;
             this.order = parseModel.get("order") ? parseModel.get("order") : 0; // default order is 0

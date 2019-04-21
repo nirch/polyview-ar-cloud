@@ -18,8 +18,8 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         $scope.model.claraEmbedId = $sce.trustAsResourceUrl(
             "https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
 
-        // Checking if there is a need to show Apple's AR Quick Look
-        checkAppleArQuickLook();
+        // Checking which viewer to show (Apple's AR Quick Look, Polyviewer or Clara viewer)
+        checkViewer();
 
         //alert(model.parseModel.get("projectId").get("techName"));
         //gtag('config', 'UA-115185862-3');
@@ -120,7 +120,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
                 // directional.position.set(0.5, 0, 0.866); // ~60º
                 // scene.add(directional);
 
-                const hemisphere = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
+                const hemisphere = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1.85 );
                 scene.add( hemisphere );
 
                 renderer.toneMappingExposure = 1.0;
@@ -214,19 +214,31 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
     })
 
     var isAppleArQuickLook = false;
+    var isClaraViewer = false;
+    var isPolyviewer = false;
 
-    function checkAppleArQuickLook() {
+    function checkViewer() {
         // First checking if there is an ios format file available (usdz)
         // Then, if the file is available, checking if we are running on a Safari 12 browser
         if (isSafariFormatAvailable() && isSafari12()) {
             isAppleArQuickLook = true;
+        } else if (isPolyviewerFormatAvailable()) {
+            isPolyviewer = true;
         } else {
-            isAppleArQuickLook = false;
+            isClaraViewer = true;
         }
     }
 
     $scope.showAppleArQuickLook = function () {
         return isAppleArQuickLook;
+    }
+
+    $scope.showClaraViewer = function () {
+        return isClaraViewer;
+    }
+
+    $scope.showPolyviewer = function () {
+        return isPolyviewer;
     }
 
     function isSafariFormatAvailable() {
@@ -240,5 +252,10 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
             return false;
         }
     }
+
+    function isPolyviewerFormatAvailable() {
+        return $scope.model.gltfUrl ? true : false
+    }
+
 
 });

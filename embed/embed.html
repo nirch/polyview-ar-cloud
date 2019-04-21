@@ -4,10 +4,10 @@
         <img class="img-fluid" ng-src="{{model.thumbnailUrl}}">
     </a>
 </div>
-<div class="viewer-container" ng-if="!showAppleArQuickLook() && !model.gltfUrl">
+<div class="viewer-container" ng-if="showClaraViewer()">
     <iframe class="viewer-iframe" ng-src="{{model.claraEmbedId}}" fullscreen></iframe>
     <i class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
 </div>
-<div class="viewer-container" id="viewer" ng-show="!showAppleArQuickLook() && model.gltfUrl">
+<div class="viewer-container" id="viewer" ng-show="showPolyviewer()">
     <i class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
 </div>

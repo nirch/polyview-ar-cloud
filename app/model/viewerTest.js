@@ -77,12 +77,15 @@ app.controller("viewerTestCtrl", function ($scope, $routeParams, customerSrv, pr
                     scene.add(gltf.scene);
 
 
-                    var ambient = new THREE.AmbientLight(0xffffff, 0.3);
-                    scene.add(ambient);
+                    // var ambient = new THREE.AmbientLight(0xffffff, 0.3);
+                    // scene.add(ambient);
 
-                    const directional = new THREE.DirectionalLight(0xffffff, 0.8 * Math.PI);
-                    directional.position.set(0.5, 0, 0.866); // ~60º
-                    scene.add(directional);
+                    // const directional = new THREE.DirectionalLight(0xffffff, 0.8 * Math.PI);
+                    // directional.position.set(0.5, 0, 0.866); // ~60º
+                    // scene.add(directional);
+
+                    const hemisphere = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
+                    scene.add( hemisphere );
 
                     renderer.toneMappingExposure = 1.0;
 

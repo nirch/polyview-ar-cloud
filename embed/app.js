@@ -43,6 +43,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
 
 
         if (model.gltfUrl) {
+            $scope.isPolyviewerLoading = true;
             initPolyviewer(model);
         }
 
@@ -77,7 +78,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
 
         // Loading the model
         loader.load(model.gltfUrl, function (gltf) {
-
+            
             // Setting the camera position and controls based on model dimensions
             setCameraAndControlsBasedOnModel(gltf, controls, camera);
 
@@ -91,6 +92,9 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
 
             window.addEventListener('resize', resize, false);
 
+            // Removing the loader
+            $scope.isPolyviewerLoading = false;
+            $scope.$apply();
         }, undefined, function (error) {
             console.error(error);
         });

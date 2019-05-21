@@ -9,5 +9,6 @@
     <i class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
 </div>
 <div class="viewer-container" id="viewer" ng-show="showPolyviewer()">
+    <div id="loader" ng-show="isPolyviewerLoading"></div>
     <i class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
 </div>

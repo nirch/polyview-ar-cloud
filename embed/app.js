@@ -11,12 +11,16 @@ app.config(function ($routeProvider) {
 });
 
 app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, modelSrv,
-    deviceDetector, projectSrv, customerSrv, Fullscreen) {
+    deviceDetector, projectSrv, customerSrv, Fullscreen, $location) {
+
+    $scope.isGoogleViewer = $location.search().google ? true : false;
 
     modelSrv.getById($routeParams.modelId).then(model => {
         $scope.model = model;
         $scope.model.claraEmbedId = $sce.trustAsResourceUrl(
             "https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
+        $scope.model.gltfSecured = $sce.trustAsResourceUrl($scope.model.gltfUrl);
+    
 
         // Checking which viewer to show (Apple's AR Quick Look, Polyviewer or Clara viewer)
         checkViewer();
@@ -42,7 +46,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         });
 
 
-        if (model.gltfUrl) {
+        if (model.gltfUrl && !$scope.isGoogleViewer) {
             $scope.isPolyviewerLoading = true;
             initPolyviewer(model);
         }

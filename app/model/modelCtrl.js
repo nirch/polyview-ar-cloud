@@ -1,5 +1,5 @@
 
-app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $sce, $document) {
+app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $sce, $document, $location) {
 
     $scope.notFound = false;
 
@@ -12,7 +12,11 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
             $scope.projectHref = "#!/" + project.techName;
             modelSrv.getByName(project, $routeParams.modelName).then(model => {
                 $scope.model = model;
-                $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id);
+                if ($location.search().google) {
+                    $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id + "?google");
+                } else {
+                    $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id);
+                }
 
                 $document.ready(function() {
                     // Enabling tooltips

@@ -1,14 +1,21 @@
 
-<div class="text-center" ng-if="showAppleArQuickLook()">
-    <a rel="ar" href="{{model.usdzUrl}}">
-        <img class="img-fluid" ng-src="{{model.thumbnailUrl}}">
-    </a>
+<div ng-if="!isGoogleViewer">
+    <div class="text-center" ng-if="showAppleArQuickLook()">
+        <a rel="ar" href="{{model.usdzUrl}}">
+            <img class="img-fluid" ng-src="{{model.thumbnailUrl}}">
+        </a>
+    </div>
+    <div class="viewer-container" ng-if="showClaraViewer()">
+        <iframe class="viewer-iframe" ng-src="{{model.claraEmbedId}}" fullscreen></iframe>
+        <i class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
+    </div>
+    <div class="viewer-container" id="viewer" ng-show="showPolyviewer()">
+        <div id="loader" ng-show="isPolyviewerLoading"></div>
+        <i class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
+    </div>
 </div>
-<div class="viewer-container" ng-if="showClaraViewer()">
-    <iframe class="viewer-iframe" ng-src="{{model.claraEmbedId}}" fullscreen></iframe>
-    <i class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
-</div>
-<div class="viewer-container" id="viewer" ng-show="showPolyviewer()">
-    <div id="loader" ng-show="isPolyviewerLoading"></div>
+
+<div class="viewer-container" ng-if="isGoogleViewer">
+    <model-viewer class="viewer-iframe" src="{{model.gltfSecured}}" ios-src="{{model.usdzUrl}}" camera-controls background-color="#f8f9fa"></model-viewer>
     <i class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
 </div>

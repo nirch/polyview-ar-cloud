@@ -13,7 +13,11 @@ app.config(function ($routeProvider) {
 app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, modelSrv,
     deviceDetector, projectSrv, customerSrv, Fullscreen, $location) {
 
+    // whether to show google viewer (default) or our viewer
     $scope.isGoogleViewer = $location.search().polyviewer ? false : true;
+
+    // this is to hide the fullscreen button from iOS devices until I will add the support
+    $scope.isIOS = deviceDetector.os === "ios";
 
     modelSrv.getById($routeParams.modelId).then(model => {
         $scope.model = model;

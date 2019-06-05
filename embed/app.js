@@ -13,7 +13,7 @@ app.config(function ($routeProvider) {
 app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, modelSrv,
     deviceDetector, projectSrv, customerSrv, Fullscreen, $location) {
 
-    $scope.isGoogleViewer = $location.search().google ? true : false;
+    $scope.isGoogleViewer = $location.search().polyviewer ? false : true;
 
     modelSrv.getById($routeParams.modelId).then(model => {
         $scope.model = model;
@@ -117,7 +117,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         animate();
 
         var resize = function () {
-            const {clientHeight, clientWidth} = viewerElement.parentElement.parentElement;
+            const {clientHeight, clientWidth} = document.body;//viewerElement.parentElement.parentElement.parentElement;
 
             camera.aspect = clientWidth / clientHeight;
             camera.updateProjectionMatrix();

@@ -12,8 +12,8 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
             $scope.projectHref = "#!/" + project.techName;
             modelSrv.getByName(project, $routeParams.modelName).then(model => {
                 $scope.model = model;
-                if ($location.search().google) {
-                    $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id + "?google");
+                if ($location.search().polyviewer) {
+                    $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id + "?polyviewer");
                 } else {
                     $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id);
                 }

@@ -16,6 +16,6 @@
 </div>
 
 <div class="viewer-container" ng-if="isGoogleViewer">
-    <model-viewer class="viewer-iframe" src="{{model.gltfSecured}}" ios-src="{{model.usdzUrl}}" ar camera-controls background-color="#f8f9fa"></model-viewer>
+    <model-viewer class="viewer-iframe" src="{{model.gltfSecured}}" ios-src="{{model.usdzUrl}}" ar camera-controls background-color="#f8f9fa" environment-image="../assets/environment/studio010.hdr"></model-viewer>
     <i ng-hide="isIOS" class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
 </div>

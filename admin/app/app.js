@@ -1,7 +1,7 @@
 
 var app = angular.module("adminApp", []);
 
-app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, $sce) {
+app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, $sce, environmentSrv) {
 
     $scope.intensity = 1;
     $scope.bgColor = "#ffffff";
@@ -11,11 +11,17 @@ app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, 
     $scope.projects = [];
     $scope.models = [];
 
+    // Loading projects
     customerSrv.getActive().then(customer => {
         projectSrv.getByCustomer(customer).then(projects => {
             $scope.projects = projects;
         });
     });
+
+    // Loading environments
+    environmentSrv.getEnvironments().then(environments => {
+        $scope.environments = environments;
+    })
 
     $scope.onProjectSelected = function() {
         modelSrv.getByProject($scope.selectedProject, false).then(models => {

@@ -15,6 +15,8 @@ app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, 
     customerSrv.getActive().then(customer => {
         projectSrv.getByCustomer(customer).then(projects => {
             $scope.projects = projects;
+            $scope.selectedProject = $scope.projects[0];
+            $scope.onProjectSelected();
         });
     });
 
@@ -25,11 +27,16 @@ app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, 
 
     $scope.onProjectSelected = function() {
         modelSrv.getByProject($scope.selectedProject, false).then(models => {
+            $scope.models = [];
             models.forEach(model => {
                 if (model.gltfUrl) {
                     $scope.models.push(model);
                 }
             });
+            $scope.selectedModel = $scope.models[0];
+            if ($scope.selectedModel) {
+                $scope.onModelSelected();
+            }
         });
     }
 

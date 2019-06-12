@@ -1,12 +1,15 @@
 
 var app = angular.module("adminApp", []);
 
-app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv) {
+app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, $sce) {
 
     $scope.intensity = 1;
     $scope.bgColor = "#ffffff";
     $scope.selectedProject = null;
     $scope.selectedModel = null;
+    $scope.selectedModelSecureUrl = null;
+    $scope.projects = [];
+    $scope.models = [];
 
     customerSrv.getActive().then(customer => {
         projectSrv.getByCustomer(customer).then(projects => {
@@ -16,12 +19,16 @@ app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv) 
 
     $scope.onProjectSelected = function() {
         modelSrv.getByProject($scope.selectedProject, false).then(models => {
-            $scope.models = models;
+            models.forEach(model => {
+                if (model.gltfUrl) {
+                    $scope.models.push(model);
+                }
+            });
         });
     }
 
     $scope.onModelSelected = function() {
-        alert($scope.selectedModel.displayName);
+        $scope.selectedModelSecureUrl = $sce.trustAsResourceUrl($scope.selectedModel.gltfUrl);
     }
 
 });

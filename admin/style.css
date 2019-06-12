@@ -19,3 +19,8 @@
     height: 100%;
     border: none;
 }
+
+select.models > option[value="false"] {
+    background-color: rgba(217,83,79, 0.8)
+    ;
+}

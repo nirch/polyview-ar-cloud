@@ -6,6 +6,7 @@ app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, 
     $scope.envIntensity = 1;
     $scope.shadowIntensity = 0;
     $scope.stageLightIntensity = 1;
+    $scope.enablePmrem = false;
     $scope.bgColor = "#ffffff";
     $scope.selectedProject = null;
     $scope.selectedModel = null;
@@ -44,6 +45,17 @@ app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, 
 
     $scope.onModelSelected = function() {
         $scope.selectedModelSecureUrl = $sce.trustAsResourceUrl($scope.selectedModel.gltfUrl);
+    }
+
+    $scope.togglePmrem = function() {
+        var modelViewerElement = angular.element(document.querySelector('#viewer'));
+        if ($scope.enablePmrem) {
+            // adding attribute
+            modelViewerElement.attr("experimental-pmrem", "");
+        } else {
+            // removing attribute
+            modelViewerElement.removeAttr("experimental-pmrem");            
+        }
     }
 
 });

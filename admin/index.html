@@ -40,9 +40,9 @@
 
 <body ng-controller="adminCtrl">
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <form class="col-md-4 pt-5">
+            <form class="col-md-4 pt-3">
                 <div class="form-group row">
                     <label for="projects" class="col-3 col-form-label">Project</label>
                     <div class="col-9">
@@ -96,11 +96,17 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="pmrem" ng-model="enablePmrem" ng-change="togglePmrem()">
+                    <label class="form-check-label" for="defaultCheck1">
+                      Enable experimental pmrem (<a href="https://googlewebcomponents.github.io/model-viewer/index.html" target="_blank">read here</a>)
+                    </label>
+                </div>
             </form>
 
-            <div class="col-md-8">
+            <div class="col-md-8 pt-3">
                 <div class="viewer-container">
-                    <model-viewer src="{{selectedModelSecureUrl}}" environment-intensity="{{envIntensity}}" camera-controls
+                    <model-viewer id="viewer" src="{{selectedModelSecureUrl}}" environment-intensity="{{envIntensity}}" camera-controls
                         background-color="{{bgColor}}" environment-image={{selectedEnvironment.imageUrl}}
                         stage-light-intensity={{stageLightIntensity}} shadow-intensity="{{shadowIntensity}}"></model-viewer>
                 </div>

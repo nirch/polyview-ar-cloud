@@ -3,7 +3,9 @@ var app = angular.module("adminApp", []);
 
 app.controller("adminCtrl", function($scope, customerSrv, projectSrv, modelSrv, $sce, environmentSrv) {
 
-    $scope.intensity = 1;
+    $scope.envIntensity = 1;
+    $scope.shadowIntensity = 0;
+    $scope.stageLightIntensity = 1;
     $scope.bgColor = "#ffffff";
     $scope.selectedProject = null;
     $scope.selectedModel = null;

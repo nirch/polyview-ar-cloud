@@ -10,11 +10,12 @@ app.factory("modelSrv", function ($q) {
             this.description = parseModel.get("description");
             this.isLive = parseModel.get("isLive");
             this.claraId = parseModel.get("claraId");
-            this.usdzUrl = parseModel.get("usdz")._url;
+            this.usdzUrl = parseModel.get("usdz") ? parseModel.get("usdz")._url : null;
             this.gltfUrl = parseModel.get("gltf") ? parseModel.get("gltf")._url : null;
             this.thumbnailUrl = parseModel.get("thumbnail")._url;
             this.projectId = parseModel.get("projectId").id;
             this.order = parseModel.get("order") ? parseModel.get("order") : 0; // default order is 0
+            this.editor = parseModel.get("editor");
             this.parseModel = parseModel;
         }
     }

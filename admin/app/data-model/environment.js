@@ -11,7 +11,7 @@ app.factory("environmentSrv", function ($q) {
         }
     }
 
-    function getEnvironments() {
+    function getAll() {
         let async = $q.defer();
 
         const ParseEnvironment = Parse.Object.extend('Environment');
@@ -30,9 +30,9 @@ app.factory("environmentSrv", function ($q) {
 
         return async.promise;
     }
-
+    
     return {
-        getEnvironments: getEnvironments
+        getAll: getAll
     }
 });
 

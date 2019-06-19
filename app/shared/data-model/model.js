@@ -90,10 +90,28 @@ app.factory("modelSrv", function ($q) {
     }
 
 
+    function updateEditorSettings(model, editorSettings) {
+        let async = $q.defer();
+
+        model.parseModel.set("editor", editorSettings);
+        model.parseModel.save().then((response) => {
+            console.log('Updated Model', response);
+            let model = new Model(response);
+            async.resolve(model);
+        }, (error) => {
+            console.error('Error while updating Model', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
+
+
     return {
         getByProject: getByProject,
         getByName: getByName,
-        getById: getById
+        getById: getById,
+        updateEditorSettings: updateEditorSettings
     }
 });
 

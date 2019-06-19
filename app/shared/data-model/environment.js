@@ -30,9 +30,31 @@ app.factory("environmentSrv", function ($q) {
 
         return async.promise;
     }
+
+    function getById(envId) {
+        let async = $q.defer();
+
+        const ParseEnvironment = Parse.Object.extend('Environment');
+        const query = new Parse.Query(ParseEnvironment);
+        query.get(envId).then(result => {
+            if (result) {
+                let env = new Environment(result);
+                async.resolve(env);
+            } else {
+                async.reject(404);
+            }
+        }, error => {
+            console.error('Error while fetching env', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+
+    }
     
     return {
-        getAll: getAll
+        getAll: getAll,
+        getById: getById
     }
 });
 

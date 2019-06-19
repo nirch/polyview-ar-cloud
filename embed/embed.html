@@ -16,8 +16,9 @@
 </div>
 
 <div class="viewer-container" ng-if="isGoogleViewer">
-    <model-viewer class="viewer-iframe" src="{{model.gltfSecured}}" ios-src="{{model.usdzUrl}}" ar camera-controls 
-    background-color="#f8f9fa" environment-image="https://parsefiles.back4app.com/b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE/c9439ff7e37ca69bd1791faec272cda7_Studio010_Small.hdr"
-    environment-intensity="2" stage-light-intensity="1" shadow-intensity="0.2" experimental-pmrem></model-viewer>
+    <model-viewer id="model-viewer" class="viewer-iframe" src="{{model.gltfSecured}}" ios-src="{{model.usdzUrl}}" ar camera-controls 
+        background-color="#f8f9fa" environment-image="{{viewerSettings.envImage}}" 
+        environment-intensity="{{viewerSettings.envIntensity}}" stage-light-intensity="{{viewerSettings.stageLightIntensity}}" 
+        shadow-intensity="{{viewerSettings.shadowIntensity}}"></model-viewer>
     <i ng-hide="isIOS" class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
 </div>

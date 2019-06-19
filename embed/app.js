@@ -11,7 +11,7 @@ app.config(function ($routeProvider) {
 });
 
 app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, modelSrv,
-    deviceDetector, projectSrv, customerSrv, Fullscreen, $location) {
+    deviceDetector, projectSrv, customerSrv, Fullscreen, $location, environmentSrv) {
 
     // whether to show google viewer (default) or our viewer
     $scope.isGoogleViewer = $location.search().polyviewer ? false : true;
@@ -25,6 +25,10 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
             "https://clara.io/player/v2/" + $scope.model.claraId + "?tools=hide");
         $scope.model.gltfSecured = $sce.trustAsResourceUrl($scope.model.gltfUrl);
     
+        getViewerSetting($scope.model).then(settings => {
+            $scope.viewerSettings = settings;
+            togglePmrem();
+        });
 
         // Checking which viewer to show (Apple's AR Quick Look, Polyviewer or Clara viewer)
         checkViewer();
@@ -287,6 +291,54 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
     $scope.showPolyviewer = function () {
         return isPolyviewer;
     }
+
+    async function getViewerSetting(model) {
+        let viewerSettings;
+
+        if (!model.editor) {
+            // loading default settings
+            viewerSettings = await getDefaultViewerSettings();
+        } else {
+            const env = await environmentSrv.getById(model.editor.environmentId);
+
+             // Loading saved settings
+             viewerSettings = {
+                envIntensity: model.editor.envIntensity,
+                shadowIntensity: model.editor.shadowIntensity,
+                stageLightIntensity: model.editor.stageLightIntensity,
+                enablePmrem: model.editor.enablePmrem,
+                envImage: env.imageUrl
+            }
+        }
+
+        return viewerSettings;
+    }
+
+    async function getDefaultViewerSettings() {
+        const defaultEnvId = "otCxXiSe6F";
+        const env = await environmentSrv.getById(defaultEnvId);
+        const defaultSettings = {
+            envIntensity: 2,
+            shadowIntensity: 0.2,
+            stageLightIntensity: 1,
+            enablePmrem: true,
+            envImage: env.imageUrl
+        }
+
+        return defaultSettings;
+    }
+
+    function togglePmrem () {
+        var modelViewerElement = angular.element(document.querySelector('#model-viewer'));
+        if ($scope.viewerSettings.enablePmrem) {
+            // adding attribute
+            modelViewerElement.attr("experimental-pmrem", "");
+        } else {
+            // removing attribute
+            modelViewerElement.removeAttr("experimental-pmrem");
+        }
+    }
+
 
     function isSafariFormatAvailable() {
         return $scope.model.usdzUrl ? true : false

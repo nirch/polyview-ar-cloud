@@ -62,34 +62,34 @@
                 <div class="form-group row">
                     <label for="env-intensity" class="col-3 col-form-label">Environment Intensity</label>
                     <div class="col-9">
-                        <input type="number" class="form-control" ng-model="selectedModel.editor.envIntensity" step="0.05"
+                        <input type="number" class="form-control" ng-model="editorSettings.envIntensity" step="0.05"
                             id="env-intensity">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="shadow-intensity" class="col-3 col-form-label">Shadow Intensity</label>
                     <div class="col-9">
-                        <input type="number" class="form-control" ng-model="selectedModel.editor.shadowIntensity" step="0.05"
+                        <input type="number" class="form-control" ng-model="editorSettings.shadowIntensity" step="0.05"
                             id="shadow-intensity">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="stage-light-intensity" class="col-3 col-form-label">Stage Light Intensity</label>
                     <div class="col-9">
-                        <input type="number" class="form-control" ng-model="selectedModel.editor.stageLightIntensity" step="0.05"
+                        <input type="number" class="form-control" ng-model="editorSettings.stageLightIntensity" step="0.05"
                             id="stage-light-intensity">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="bg-color" class="col-3 col-form-label">BG Color</label>
                     <div class="col-9">
-                        <input type="color" class="form-control" ng-model="selectedModel.editor.bgColor" id="bg-color">
+                        <input type="color" class="form-control" ng-model="editorSettings.bgColor" id="bg-color">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="environments" class="col-3 col-form-label">Environment</label>
                     <div class="col-9">
-                        <select class="form-control" id="environments" ng-model="selectedModel.editor.selectedEnvironment"
+                        <select class="form-control" id="environments" ng-model="editorSettings.selectedEnvironment"
                             ng-change="onEnvironmentSelected()"
                             ng-options="environment.displayName for environment in environments">
                             <option value="">None</option>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="pmrem" ng-model="selectedModel.editor.enablePmrem" ng-change="togglePmrem()">
+                    <input class="form-check-input" type="checkbox" id="pmrem" ng-model="editorSettings.enablePmrem" ng-change="togglePmrem()">
                     <label class="form-check-label" for="defaultCheck1">
                       Enable experimental pmrem (<a href="https://googlewebcomponents.github.io/model-viewer/index.html" target="_blank">read here</a>)
                     </label>
@@ -108,9 +108,9 @@
 
             <div class="col-md-8 pt-3">
                 <div class="viewer-container">
-                    <model-viewer id="viewer" src="{{selectedModelSecureUrl}}" environment-intensity="{{selectedModel.editor.envIntensity}}" camera-controls
-                        background-color="{{selectedModel.editor.bgColor}}" environment-image={{selectedModel.editor.selectedEnvironment.imageUrl}}
-                        stage-light-intensity={{selectedModel.editor.stageLightIntensity}} shadow-intensity="{{selectedModel.editor.shadowIntensity}}"></model-viewer>
+                    <model-viewer id="viewer" src="{{selectedModelSecureUrl}}" environment-intensity="{{editorSettings.envIntensity}}" camera-controls
+                        background-color="{{editorSettings.bgColor}}" environment-image={{editorSettings.selectedEnvironment.imageUrl}}
+                        stage-light-intensity={{editorSettings.stageLightIntensity}} shadow-intensity="{{editorSettings.shadowIntensity}}"></model-viewer>
                 </div>
             </div>
 

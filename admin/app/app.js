@@ -6,6 +6,7 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
     $scope.selectedProject = null;
     $scope.selectedModel = null;
     $scope.selectedModelSecureUrl = null;
+    $scope.editorSettings = {};
     $scope.projects = [];
     $scope.models = [];
 
@@ -40,21 +41,15 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
 
     $scope.onModelSelected = function () {
         $scope.selectedModelSecureUrl = $sce.trustAsResourceUrl($scope.selectedModel.gltfUrl);
-        
-        // Loading the default params if there are no custom one
-        if (!$scope.selectedModel.editor) {
-            $scope.selectedModel.editor = getDefaultEditorSettings($scope.environments);
-        } else {
-            // we have custome settings - loading the default env
-            $scope.selectedModel.editor.selectedEnvironment = getEnvironmentById($scope.environments, $scope.selectedModel.editor.selectedEnvironment);
-        }
+
+        $scope.editorSettings = loadEditorSettings();
 
         $scope.togglePmrem();
     }
 
     $scope.togglePmrem = function () {
         var modelViewerElement = angular.element(document.querySelector('#viewer'));
-        if ($scope.selectedModel.editor.enablePmrem) {
+        if ($scope.editorSettings.enablePmrem) {
             // adding attribute
             modelViewerElement.attr("experimental-pmrem", "");
         } else {
@@ -63,26 +58,50 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
         }
     }
 
-    $scope.applyChanges = function() {
+    $scope.applyChanges = function () {
         let settingsToSave = {
-            envIntensity: $scope.selectedModel.editor.envIntensity,
-            shadowIntensity: $scope.selectedModel.editor.shadowIntensity,
-            stageLightIntensity: $scope.selectedModel.editor.stageLightIntensity,
-            enablePmrem: $scope.selectedModel.editor.enablePmrem,
-            bgColor: $scope.selectedModel.editor.bgColor,
-            selectedEnvironment: $scope.selectedModel.editor.selectedEnvironment.id
+            envIntensity: $scope.editorSettings.envIntensity,
+            shadowIntensity: $scope.editorSettings.shadowIntensity,
+            stageLightIntensity: $scope.editorSettings.stageLightIntensity,
+            enablePmrem: $scope.editorSettings.enablePmrem,
+            bgColor: $scope.editorSettings.bgColor,
+            environmentId: $scope.editorSettings.selectedEnvironment.id
         }
 
-        modelSrv.updateEditorSettings($scope.selectedModel, settingsToSave).then(function(model) {
+        modelSrv.updateEditorSettings($scope.selectedModel, settingsToSave).then(function (model) {
             alert("settings saved successfully");
-        }, function(err) {
+        }, function (err) {
             console.error(err);
             alert("error in saving settings");
         });
     }
 
+
+    function loadEditorSettings() {
+        let settings;
+
+        if (!$scope.selectedModel.editor) {
+            // Loading default settings
+            settings = getDefaultEditorSettings();
+        } else {
+            // Loading saved settings
+            settings = {
+                envIntensity: $scope.selectedModel.editor.envIntensity,
+                shadowIntensity: $scope.selectedModel.editor.shadowIntensity,
+                stageLightIntensity: $scope.selectedModel.editor.stageLightIntensity,
+                enablePmrem: $scope.selectedModel.editor.enablePmrem,
+                bgColor: $scope.selectedModel.editor.bgColor,
+                selectedEnvironment: getEnvironmentById($scope.selectedModel.editor.environmentId)
+            }
+
+
+        }
+
+        return settings;
+    }
+
     // Getting the default env settings
-    function getDefaultEditorSettings(envs) {
+    function getDefaultEditorSettings() {
         let defaultSettings = {
             envIntensity: 2,
             shadowIntensity: 0.2,
@@ -92,15 +111,15 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
         }
 
         let defaultEnvId = "otCxXiSe6F";
-        defaultSettings.selectedEnvironment = getEnvironmentById(envs, defaultEnvId)
+        defaultSettings.selectedEnvironment = getEnvironmentById(defaultEnvId)
 
         return defaultSettings;
     }
 
-    function getEnvironmentById(envs, id) {
-        for (let i = 0; i < envs.length; i++) {
-            if (envs[i].id === id) {
-                return envs[i];
+    function getEnvironmentById(id) {
+        for (let i = 0; i < $scope.environments.length; i++) {
+            if ($scope.environments[i].id === id) {
+                return $scope.environments[i];
             }
         }
 

@@ -42,7 +42,7 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
     $scope.onModelSelected = function () {
         $scope.selectedModelSecureUrl = $sce.trustAsResourceUrl($scope.selectedModel.gltfUrl);
 
-        $scope.editorSettings = loadEditorSettings();
+        $scope.editorSettings = getSelectedModelEditorSettings();
 
         $scope.togglePmrem();
     }
@@ -76,8 +76,30 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
         });
     }
 
+    // checking if the saved state and the current state are equal. If not equal than the state is dirty
+    $scope.isDirty = function() {
+        if (!$scope.selectedModel) {
+            return false;
+        }
 
-    function loadEditorSettings() {
+        let savedModelSettings = getSelectedModelEditorSettings();
+
+        if (
+            $scope.editorSettings.envIntensity === savedModelSettings.envIntensity &&
+            $scope.editorSettings.shadowIntensity === savedModelSettings.shadowIntensity &&
+            $scope.editorSettings.stageLightIntensity === savedModelSettings.stageLightIntensity &&
+            $scope.editorSettings.enablePmrem === savedModelSettings.enablePmrem &&
+            $scope.editorSettings.bgColor === savedModelSettings.bgColor &&
+            $scope.editorSettings.selectedEnvironment.id === savedModelSettings.selectedEnvironment.id
+        ) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    function getSelectedModelEditorSettings() {
         let settings;
 
         if (!$scope.selectedModel.editor) {
@@ -93,8 +115,6 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
                 bgColor: $scope.selectedModel.editor.bgColor,
                 selectedEnvironment: getEnvironmentById($scope.selectedModel.editor.environmentId)
             }
-
-
         }
 
         return settings;

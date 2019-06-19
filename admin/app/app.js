@@ -59,13 +59,18 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
     }
 
     $scope.applyChanges = function () {
-        let settingsToSave = {
-            envIntensity: $scope.editorSettings.envIntensity,
-            shadowIntensity: $scope.editorSettings.shadowIntensity,
-            stageLightIntensity: $scope.editorSettings.stageLightIntensity,
-            enablePmrem: $scope.editorSettings.enablePmrem,
-            bgColor: $scope.editorSettings.bgColor,
-            environmentId: $scope.editorSettings.selectedEnvironment.id
+        let settingsToSave = undefined;
+
+        // If the settings to save are the default ones than saving 'undefined'
+        if (!$scope.isDefault()) {
+            let settingsToSave = {
+                envIntensity: $scope.editorSettings.envIntensity,
+                shadowIntensity: $scope.editorSettings.shadowIntensity,
+                stageLightIntensity: $scope.editorSettings.stageLightIntensity,
+                enablePmrem: $scope.editorSettings.enablePmrem,
+                bgColor: $scope.editorSettings.bgColor,
+                environmentId: $scope.editorSettings.selectedEnvironment.id
+            }
         }
 
         modelSrv.updateEditorSettings($scope.selectedModel, settingsToSave).then(function (model) {
@@ -83,20 +88,38 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
         }
 
         let savedModelSettings = getSelectedModelEditorSettings();
+        return !isSettingsEqual(savedModelSettings, $scope.editorSettings);
+    }
 
-        if (
-            $scope.editorSettings.envIntensity === savedModelSettings.envIntensity &&
-            $scope.editorSettings.shadowIntensity === savedModelSettings.shadowIntensity &&
-            $scope.editorSettings.stageLightIntensity === savedModelSettings.stageLightIntensity &&
-            $scope.editorSettings.enablePmrem === savedModelSettings.enablePmrem &&
-            $scope.editorSettings.bgColor === savedModelSettings.bgColor &&
-            $scope.editorSettings.selectedEnvironment.id === savedModelSettings.selectedEnvironment.id
-        ) {
-            return false;
-        } else {
+    // returns true if the current settings are the default settings
+    $scope.isDefault = function() {
+        if (!$scope.selectedModel) {
             return true;
         }
 
+        let defaultSettings = getDefaultEditorSettings();
+        return isSettingsEqual(defaultSettings, $scope.editorSettings);
+    }
+
+    // Restoring the editor settings to the default state (still user needs to save)
+    $scope.restoreDefaults = function() {
+        $scope.editorSettings = getDefaultEditorSettings();
+        $scope.togglePmrem();
+    }
+
+    function isSettingsEqual(settings1, settings2) {
+        if (
+            settings1.envIntensity === settings2.envIntensity &&
+            settings1.shadowIntensity === settings2.shadowIntensity &&
+            settings1.stageLightIntensity === settings2.stageLightIntensity &&
+            settings1.enablePmrem === settings2.enablePmrem &&
+            settings1.bgColor === settings2.bgColor &&
+            settings1.selectedEnvironment.id === settings2.selectedEnvironment.id
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function getSelectedModelEditorSettings() {

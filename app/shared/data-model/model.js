@@ -93,7 +93,11 @@ app.factory("modelSrv", function ($q) {
     function updateEditorSettings(model, editorSettings) {
         let async = $q.defer();
 
-        model.parseModel.set("editor", editorSettings);
+        if (editorSettings) {
+            model.parseModel.set("editor", editorSettings);
+        } else {
+            model.parseModel.unset("editor");
+        }
         model.parseModel.save().then((response) => {
             console.log('Updated Model', response);
             let model = new Model(response);

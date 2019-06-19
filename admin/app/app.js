@@ -63,7 +63,7 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
 
         // If the settings to save are the default ones than saving 'undefined'
         if (!$scope.isDefault()) {
-            let settingsToSave = {
+            settingsToSave = {
                 envIntensity: $scope.editorSettings.envIntensity,
                 shadowIntensity: $scope.editorSettings.shadowIntensity,
                 stageLightIntensity: $scope.editorSettings.stageLightIntensity,

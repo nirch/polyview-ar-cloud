@@ -74,10 +74,10 @@ app.controller("adminCtrl", function ($scope, customerSrv, projectSrv, modelSrv,
         }
 
         modelSrv.updateEditorSettings($scope.selectedModel, settingsToSave).then(function (model) {
-            alert("settings saved successfully");
+            console.log("settings saved successfully");
         }, function (err) {
             console.error(err);
-            alert("error in saving settings");
+            console.log("error in saving settings");
         });
     }
 

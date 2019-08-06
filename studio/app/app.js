@@ -1,4 +1,4 @@
-var app = angular.module("arCloudAdminApp", ["ngRoute", "ngImageInputWithPreview"]);
+var app = angular.module("arCloudAdminApp", ["ngRoute", "ngImageInputWithPreview", "ui.bootstrap"]);
 
 app.config(function($routeProvider) {
     $routeProvider.

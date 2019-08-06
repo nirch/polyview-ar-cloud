@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="">
+<html lang="en" ng-app="arCloudAdminApp">
 
 <head>
     <title>Title</title>
@@ -17,14 +17,33 @@
 
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
+
+    <!-- Parse -->
+    <script src="../node_modules/parse/dist/parse.min.js"></script>
+    <script>
+        Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
+        Parse.initialize(
+            'b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE', // This is your Application ID
+            'NeokbBCMAWxomOjJgiXeduKrQLundR1nHLxAysbG' // This is your Javascript key
+        );
+    </script>
+
 
     <link rel="stylesheet" href="css/sb-admin.css">
+    <script src="app/app.js"></script>
+    <script src="../app/shared/data-model/customer.js"></script>
+    <script src="../app/shared/data-model/project.js"></script>
+    <script src="../app/shared/data-model/model.js"></script>
+    <script src="app/mainCtrl.js"></script>
+    <script src="app/models/modelsCtrl.js"></script>
 </head>
 
-<body>
+<body ng-controller="mainCtrl">
+    
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-        <a class="navbar-brand mr-1" href="index.html">Polyview AR Cloud</a>
+        <a class="navbar-brand mr-1" href="index.html">{{activeCustomer.displayName}} AR Cloud</a>
 
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
@@ -125,17 +144,17 @@
                     <span>Analytics</span></a>
             </li>
             <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fas fa-users"></i>
-                        <span>Users</span></a>
-                </li>
-            </ul>
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span></a>
+            </li>
+        </ul>
 
         <div id="content-wrapper">
 
             <div class="container-fluid">
 
-
+                <ng-view></ng-view>
             </div>
             <!-- /.container-fluid -->
 

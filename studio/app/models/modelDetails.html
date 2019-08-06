@@ -83,13 +83,27 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="isListed" ng-model="model.isListed">
+                        <input class="form-check-input" type="checkbox" id="isListed" ng-model="model.isListed" ng-disabled="!model.isLive">
                         <label class="form-check-label" for="isListed">
                             Is Listed
                         </label>
                         <small class="text-muted">Listed inside category page or accessible only with direct
                             link</small>
                     </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Hosted Link</label>
+                <div class="col-sm-10">
+                    <pre class="bg-light p-2"><code ng-show="model.isLive">http://{{activeCustomer.techName}}.polyview3d.com/#!/{{selectedProject.techName}}/{{model.techName}}</code><code ng-show="!model.isLive">N/A (check "Is Live" above to enable)</code></code></pre>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Embed Code</label>
+                <div class="col-sm-10">
+                    <pre class="bg-light p-2"><code>&lt;iframe src="http://{{activeCustomer.techName}}.polyview3d.com/embed/#!/{{model.id}}"&gt;</code></pre>
                 </div>
             </div>
 

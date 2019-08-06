@@ -9,6 +9,7 @@ app.factory("modelSrv", function ($q) {
             this.displayName = parseModel.get("displayName");
             this.description = parseModel.get("description");
             this.isLive = parseModel.get("isLive");
+            this.isListed = parseModel.get("isListed");
             this.claraId = parseModel.get("claraId");
             this.usdzUrl = parseModel.get("usdz") ? parseModel.get("usdz")._url : null;
             this.gltfUrl = parseModel.get("gltf") ? parseModel.get("gltf")._url : null;

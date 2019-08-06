@@ -5,5 +5,8 @@ app.config(function($routeProvider) {
     when("/models", {
         templateUrl: "app/models/models.html",
         controller: "modelsCtrl"
+    }).when("/models/:id" , {
+        templateUrl: "app/models/modelDetails.html",
+        controller: "modelDetailsCtrl"
     })
 })

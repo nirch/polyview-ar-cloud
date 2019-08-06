@@ -1,5 +1,8 @@
 app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $routeParams) {
 
+    $scope.selectedProject = null;
+    $scope.projects = [];
+
     customerSrv.getActive().then(customer => {
         $scope.activeCustomer = customer
 
@@ -15,6 +18,24 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
                 })
             });
         });
-
     });
+
+    $scope.updateModel = function() {
+        let params = {};
+
+        if ($scope.selectedProject.id != $scope.model.projectId) {
+            params.updateProject = $scope.selectedProject;
+        }
+
+        modelSrv.updateModel($scope.model, params).then(model => {
+            console.log("settings saved successfully");
+        }, function (err) {
+            console.error(err);
+            console.log("error in saving settings");
+        });
+    }
+
+    $scope.bla = function() {
+        // alert($scope.selectedProject.displayName);
+    }
 });

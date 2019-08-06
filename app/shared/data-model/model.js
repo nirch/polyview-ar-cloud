@@ -111,12 +111,40 @@ app.factory("modelSrv", function ($q) {
         return async.promise;
     }
 
+    function updateModel(model, params) {
+        let async = $q.defer();
+
+        model.parseModel.set('displayName', model.displayName);
+        model.parseModel.set('techName', model.techName);
+        model.parseModel.set('isLive', model.isLive);
+        model.parseModel.set('isListed', model.isListed);
+
+        if (params.updateProject) {
+            model.parseModel.set('projectId', params.updateProject.parseProject); 
+        }
+        // model.parseModel.set('usdz', new Parse.File("resume.txt", { base64: btoa("My file content") }));
+        // model.parseModel.set('projectId', new Parse.Object("Project"));
+        // model.parseModel.set('thumbnail', new Parse.File("resume.txt", { base64: btoa("My file content") }));
+        // model.parseModel.set('gltf', new Parse.File("resume.txt", { base64: btoa("My file content") }));
+
+        model.parseModel.save().then((response) => {
+            console.log('Updated Model', response);
+            let model = new Model(response);
+            async.resolve(model);
+        }, (error) => {
+            console.error('Error while updating Model', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
 
     return {
         getByProject: getByProject,
         getByName: getByName,
         getById: getById,
-        updateEditorSettings: updateEditorSettings
+        updateEditorSettings: updateEditorSettings,
+        updateModel: updateModel
     }
 });
 

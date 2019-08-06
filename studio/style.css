@@ -1,4 +1,5 @@
 
+/* Tabs Design (in model details) */
 
 #tabs h6.section-title {
     color: #eee;
@@ -27,3 +28,30 @@
 #tabs ul {
     padding-right: 0;
 }
+
+/* End of Tabs Design  */
+
+
+/* Viewer design in model details */
+
+
+.viewer-container {
+    padding-top: 56.25%;
+    position: relative;
+    margin: 0 20px;
+    margin: auto;
+    outline: none;
+}
+
+.viewer-container > model-viewer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+}
+
+/* End of Viewer design  */
+

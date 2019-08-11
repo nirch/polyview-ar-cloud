@@ -126,10 +126,11 @@ app.factory("modelSrv", function ($q) {
         if (params.newThumbnail) {
             model.parseModel.set('thumbnail', new Parse.File(params.newThumbnail.name, { base64: params.newThumbnail.data }, params.newThumbnail.contentType));
         }
+
+        if (params.newGltf) {
+            model.parseModel.set('gltf', new Parse.File(params.newGltf.name, params.newGltf.data));
+        }
         // model.parseModel.set('usdz', new Parse.File("resume.txt", { base64: btoa("My file content") }));
-        // model.parseModel.set('projectId', new Parse.Object("Project"));
-        // model.parseModel.set('thumbnail', new Parse.File("resume.txt", { base64: btoa("My file content") }));
-        // model.parseModel.set('gltf', new Parse.File("resume.txt", { base64: btoa("My file content") }));
 
         model.parseModel.save().then((response) => {
             console.log('Updated Model', response);

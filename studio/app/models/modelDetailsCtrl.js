@@ -28,11 +28,16 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             $scope.showSuccessAlert = false;
         } else if (type == "error") {
             $scope.showErrorAlert = false;
+        } else if (type == "saving") {
+            $scope.showSavingAlert = false;
         }
     }
 
     $scope.updateModel = function() {
         let params = {};
+        $scope.showSuccessAlert = false;
+        $scope.showErrorAlert = false;
+        $scope.showSavingAlert = true;
 
         if ($scope.selected.project.id != $scope.model.projectId) {
             params.updateProject = $scope.selected.project;
@@ -46,9 +51,18 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             params.newThumbnail.data = $scope.selected.thumbnail.src;
         }
 
+        let newGltfFile = document.getElementById("gltf").files[0];
+        if (newGltfFile) {
+            params.newGltf = {};
+            params.newGltf.name = newGltfFile.name;
+            params.newGltf.contentType = newGltfFile.type;
+            params.newGltf.data = newGltfFile;
+        }
+
         modelSrv.updateModel($scope.model, params).then(model => {
             console.log("settings saved successfully");
 
+            $scope.showSavingAlert = false;
             $scope.showSuccessAlert = true;
 
             $scope.model = model;
@@ -61,7 +75,17 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
         }, function (err) {
             console.error(err);
             console.log("error in saving settings");
+            $scope.showSavingAlert = false;
             $scope.showErrorAlert = true;
+
         });
+    }
+
+    $scope.changeGltf = function() {
+        $scope.selected.gltf = document.getElementById("gltf").files[0];
+    }
+
+    $scope.gltfInputLabel = function() {
+        return $scope.selected.gltf ? $scope.selected.gltf.name : "Choose glTF or GLB file";
     }
 });

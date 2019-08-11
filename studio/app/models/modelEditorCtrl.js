@@ -3,6 +3,9 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
     $scope.selectedModel = null;
     $scope.selectedModelSecureUrl = null;
     $scope.editorSettings = {};
+    $scope.showSuccessAlert = false;
+    $scope.showErrorAlert = false;
+
 
     // Loading environments
     environmentSrv.getAll().then(environments => {
@@ -46,9 +49,11 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
 
         modelSrv.updateEditorSettings($scope.selectedModel, settingsToSave).then(function (model) {
             console.log("settings saved successfully");
+            $scope.showSuccessAlert = true;
         }, function (err) {
             console.error(err);
             console.log("error in saving settings");
+            $scope.showErrorAlert = true;
         });
     }
 
@@ -141,6 +146,12 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         return null;
     }
 
-
+    $scope.closeAlert = function(type) {
+        if (type === "success") {
+            $scope.showSuccessAlert = false;
+        } else if (type == "error") {
+            $scope.showErrorAlert = false;
+        }
+    }
 
 });

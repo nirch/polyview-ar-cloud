@@ -59,7 +59,11 @@
             </div>
         </div>
     </div>
-    <div class="row mt-3">
+    <div class="row my-3 apply-btns-row">
+        <div ng-if="showSuccessAlert" uib-alert class="alert-success" close="closeAlert('success')">
+            <strong>Success!</strong> Model's viewer settings successfully saved</div>
+        <div ng-if="showErrorAlert" uib-alert class="alert-danger" close="closeAlert('error')"><strong>Failure!</strong>
+            Error in saving the model</div>
         <button class="btn btn-primary ml-auto mx-2" ng-click="applyChanges()" ng-disabled="!isDirty()">Apply
             Changes</button>
         <button class="btn btn-danger" ng-click="restoreDefaults()" ng-disabled="isDefault()">Restore

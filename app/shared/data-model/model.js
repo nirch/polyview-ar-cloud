@@ -122,6 +122,10 @@ app.factory("modelSrv", function ($q) {
         if (params.updateProject) {
             model.parseModel.set('projectId', params.updateProject.parseProject); 
         }
+
+        if (params.newThumbnail) {
+            model.parseModel.set('thumbnail', new Parse.File(params.newThumbnail.name, { base64: params.newThumbnail.data }, params.newThumbnail.contentType));
+        }
         // model.parseModel.set('usdz', new Parse.File("resume.txt", { base64: btoa("My file content") }));
         // model.parseModel.set('projectId', new Parse.Object("Project"));
         // model.parseModel.set('thumbnail', new Parse.File("resume.txt", { base64: btoa("My file content") }));

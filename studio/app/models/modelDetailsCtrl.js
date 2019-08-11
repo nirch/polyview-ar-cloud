@@ -38,6 +38,14 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             params.updateProject = $scope.selected.project;
         }
 
+        if ($scope.selected.thumbnail) {
+            let file = document.getElementById("thumbnail").files[0];
+            params.newThumbnail = {};
+            params.newThumbnail.name = file.name;
+            params.newThumbnail.contentType = file.type;
+            params.newThumbnail.data = $scope.selected.thumbnail.src;
+        }
+
         modelSrv.updateModel($scope.model, params).then(model => {
             console.log("settings saved successfully");
 

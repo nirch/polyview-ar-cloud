@@ -26,14 +26,14 @@
         <label class="col-sm-2 col-form-label">Thumbnail</label>
         <div class="col-sm-5">
             <div class="custom-file">
-                <input type="file" class="custom-file-input" id="thumbnail" image-with-preview ng-model="newThumbnail">
+                <input type="file" class="custom-file-input" id="thumbnail" image-with-preview ng-model="selected.thumbnail" accept="image/png,image/jpeg">
                 <label class="custom-file-label" for="thumbnail">Choose Thumbnail</label>
                 <small class="text-muted">16X9 aspect ratio for the thumbnail works best</small>
             </div>
         </div>
         <div class="col-sm-5">
-            <img ng-show="!newThumbnail" class="img-fluid" ng-src="{{model.thumbnailUrl}}">
-            <img ng-show="newThumbnail" class="img-fluid" ng-src="{{newThumbnail.src}}">
+            <img ng-show="!selected.thumbnail" class="img-fluid" ng-src="{{model.thumbnailUrl}}">
+            <img ng-show="selected.thumbnail" class="img-fluid" ng-src="{{selected.thumbnail.src}}">
         </div>
     </div>
 

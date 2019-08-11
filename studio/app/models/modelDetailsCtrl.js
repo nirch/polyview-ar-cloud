@@ -1,6 +1,7 @@
 app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $routeParams) {
 
-    $scope.selectedProject = null;
+    $scope.selected = {};
+    $scope.selected.project = null;
     $scope.projects = [];
 
     customerSrv.getActive().then(customer => {
@@ -13,9 +14,9 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
                 $scope.projects = projects;
                 projects.forEach(project => {
                     if (project.id === model.projectId) {
-                        $scope.selectedProject = project;
+                        $scope.selected.project = project;
                     }
-                })
+                });
             });
         });
     });
@@ -23,19 +24,23 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
     $scope.updateModel = function() {
         let params = {};
 
-        if ($scope.selectedProject.id != $scope.model.projectId) {
-            params.updateProject = $scope.selectedProject;
+        if ($scope.selected.project.id != $scope.model.projectId) {
+            params.updateProject = $scope.selected.project;
         }
 
         modelSrv.updateModel($scope.model, params).then(model => {
             console.log("settings saved successfully");
+
+            $scope.model = model;
+            $scope.projects.forEach(project => {
+                if (project.id === model.projectId) {
+                    $scope.selected.project = project;
+                }
+            });
+
         }, function (err) {
             console.error(err);
             console.log("error in saving settings");
         });
-    }
-
-    $scope.bla = function() {
-        // alert($scope.selectedProject.displayName);
     }
 });

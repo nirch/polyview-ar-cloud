@@ -8,8 +8,8 @@
         <div class="form-group row">
             <label for="project" class="col-sm-2 col-form-label">Category</label>
             <div class="col-sm-10">
-                <select class="form-control" id="projects" ng-model="selectedProject"
-                    ng-options="project.displayName for project in projects" ng-change="bla()">
+                <select class="form-control" id="projects" ng-model="selected.project"
+                    ng-options="project.displayName for project in projects">
                 </select>
             </div>
         </div>
@@ -98,11 +98,11 @@
             <label class="col-sm-2 col-form-label">Hosted Link</label>
             <div class="col-sm-8">
                 <pre
-                    class="bg-light p-2"><code ng-show="model.isLive">http://{{activeCustomer.techName}}.polyview3d.com/#!/{{selectedProject.techName}}/{{model.techName}}</code><code ng-show="!model.isLive">N/A (check "Is Live" above to enable)</code></code></pre>
+                    class="bg-light p-2"><code ng-show="model.isLive">http://{{activeCustomer.techName}}.polyview3d.com/#!/{{selected.project.techName}}/{{model.techName}}</code><code ng-show="!model.isLive">N/A (check "Is Live" above to enable)</code></code></pre>
             </div>
             <div class="col-sm-2">
                 <a name="" id="" class="btn btn-link text-dark"
-                    ng-href="http://{{activeCustomer.techName}}.polyview3d.com/#!/{{selectedProject.techName}}/{{model.techName}}"
+                    ng-href="http://{{activeCustomer.techName}}.polyview3d.com/#!/{{selected.project.techName}}/{{model.techName}}"
                     role="button" target="_blank">View <i class="far fa-eye"></i></i></a>
             </div>
         </div>

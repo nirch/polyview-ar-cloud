@@ -55,3 +55,6 @@
 
 /* End of Viewer design  */
 
+.apply-btns-row {
+    align-items: center;
+}

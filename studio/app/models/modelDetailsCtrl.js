@@ -31,6 +31,8 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
         modelSrv.updateModel($scope.model, params).then(model => {
             console.log("settings saved successfully");
 
+            $scope.showSuccessAlert = true;
+
             $scope.model = model;
             $scope.projects.forEach(project => {
                 if (project.id === model.projectId) {
@@ -41,6 +43,7 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
         }, function (err) {
             console.error(err);
             console.log("error in saving settings");
+            $scope.showErrorAlert = true;
         });
     }
 });

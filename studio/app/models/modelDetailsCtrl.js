@@ -3,6 +3,8 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
     $scope.selected = {};
     $scope.selected.project = null;
     $scope.projects = [];
+    $scope.showSuccessAlert = false;
+    $scope.showErrorAlert = false;
 
     customerSrv.getActive().then(customer => {
         $scope.activeCustomer = customer
@@ -20,6 +22,14 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             });
         });
     });
+
+    $scope.closeAlert = function(type) {
+        if (type === "success") {
+            $scope.showSuccessAlert = false;
+        } else if (type == "error") {
+            $scope.showErrorAlert = false;
+        }
+    }
 
     $scope.updateModel = function() {
         let params = {};

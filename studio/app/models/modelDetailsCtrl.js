@@ -1,5 +1,6 @@
 app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $routeParams) {
 
+    const DEFAULT_GLTF_UPLOAD_TEXT = "Choose glTF or GLB file"
     $scope.selected = {};
     $scope.selected.project = null;
     $scope.projects = [];
@@ -51,12 +52,11 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             params.newThumbnail.data = $scope.selected.thumbnail.src;
         }
 
-        let newGltfFile = document.getElementById("gltf").files[0];
-        if (newGltfFile) {
+        if ($scope.selected.gltf) {
             params.newGltf = {};
-            params.newGltf.name = newGltfFile.name;
-            params.newGltf.contentType = newGltfFile.type;
-            params.newGltf.data = newGltfFile;
+            params.newGltf.name = $scope.selected.gltf.name;
+            params.newGltf.contentType = $scope.selected.gltf.type;
+            params.newGltf.data = $scope.selected.gltf;
         }
 
         modelSrv.updateModel($scope.model, params).then(model => {
@@ -83,9 +83,10 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
 
     $scope.changeGltf = function() {
         $scope.selected.gltf = document.getElementById("gltf").files[0];
+        $scope.$apply();
     }
 
-    $scope.gltfInputLabel = function() {
-        return $scope.selected.gltf ? $scope.selected.gltf.name : "Choose glTF or GLB file";
+    $scope.gltfText = function() {
+        return $scope.selected.gltf ? $scope.selected.gltf.name : DEFAULT_GLTF_UPLOAD_TEXT;
     }
 });

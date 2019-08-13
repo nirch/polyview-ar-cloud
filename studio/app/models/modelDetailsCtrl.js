@@ -1,6 +1,7 @@
 app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $routeParams) {
 
-    const DEFAULT_GLTF_UPLOAD_TEXT = "Choose glTF or GLB file"
+    const DEFAULT_GLTF_UPLOAD_TEXT = "Choose glTF or GLB file";
+    const DEFAULT_USDZ_UPLOAD_TEXT = "Choose USDZ file";
     $scope.selected = {};
     $scope.selected.project = null;
     $scope.projects = [];
@@ -59,6 +60,14 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             params.newGltf.data = $scope.selected.gltf;
         }
 
+        if ($scope.selected.usdz) {
+            params.newUSDZ = {};
+            params.newUSDZ.name = $scope.selected.usdz.name;
+            params.newUSDZ.contentType = $scope.selected.usdz.type;
+            params.newUSDZ.data = $scope.selected.usdz;
+        }
+
+
         modelSrv.updateModel($scope.model, params).then(model => {
             console.log("settings saved successfully");
 
@@ -88,5 +97,14 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
 
     $scope.gltfText = function() {
         return $scope.selected.gltf ? $scope.selected.gltf.name : DEFAULT_GLTF_UPLOAD_TEXT;
+    }
+
+    $scope.changeUSDZ = function() {
+        $scope.selected.usdz = document.getElementById("usdz").files[0];
+        $scope.$apply();
+    }
+
+    $scope.usdzText = function() {
+        return $scope.selected.usdz ? $scope.selected.usdz.name : DEFAULT_USDZ_UPLOAD_TEXT;
     }
 });

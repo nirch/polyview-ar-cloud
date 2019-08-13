@@ -130,7 +130,10 @@ app.factory("modelSrv", function ($q) {
         if (params.newGltf) {
             model.parseModel.set('gltf', new Parse.File(params.newGltf.name, params.newGltf.data));
         }
-        // model.parseModel.set('usdz', new Parse.File("resume.txt", { base64: btoa("My file content") }));
+
+        if (params.newUSDZ) {
+            model.parseModel.set('usdz', new Parse.File(params.newUSDZ.name, params.newUSDZ.data));
+        }
 
         model.parseModel.save().then((response) => {
             console.log('Updated Model', response);

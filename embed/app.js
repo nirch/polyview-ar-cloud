@@ -28,6 +28,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         getViewerSetting($scope.model).then(settings => {
             $scope.viewerSettings = settings;
             togglePmrem();
+            updateEnvImage();
         });
 
         // Checking which viewer to show (Apple's AR Quick Look, Polyviewer or Clara viewer)
@@ -299,7 +300,10 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
             // loading default settings
             viewerSettings = await getDefaultViewerSettings();
         } else {
-            const env = await environmentSrv.getById(model.editor.environmentId);
+            let env = {};
+            if (model.editor.environmentId) {
+                env = await environmentSrv.getById(model.editor.environmentId);
+            }
 
              // Loading saved settings
              viewerSettings = {
@@ -339,6 +343,16 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         }
     }
 
+    function updateEnvImage () {
+        var modelViewerElement = angular.element(document.querySelector('#model-viewer'));
+        if ($scope.viewerSettings.envImage) {
+            // adding attribute
+            modelViewerElement.attr("environment-image", $scope.viewerSettings.envImage);
+        } else {
+            // removing attribute
+            modelViewerElement.removeAttr("environment-image");
+        }
+    }
 
     function isSafariFormatAvailable() {
         return $scope.model.usdzUrl ? true : false

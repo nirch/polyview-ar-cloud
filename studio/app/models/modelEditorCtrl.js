@@ -17,6 +17,7 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         $scope.selectedModelSecureUrl = $sce.trustAsResourceUrl($scope.selectedModel.gltfUrl);
         $scope.editorSettings = getSelectedModelEditorSettings();
         $scope.togglePmrem();
+        $scope.updateEnvImage();
     });
     });
 
@@ -32,6 +33,18 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         }
     }
 
+    $scope.updateEnvImage = function() {
+        var modelViewerElement = angular.element(document.querySelector('#viewer'));
+        if ($scope.editorSettings.selectedEnvironment) {
+            // adding attribute
+            modelViewerElement.attr("environment-image", $scope.editorSettings.selectedEnvironment.imageUrl);
+        } else {
+            // removing attribute
+            modelViewerElement.removeAttr("environment-image");
+        }
+    }
+
+
     $scope.applyChanges = function () {
         let settingsToSave = undefined;
 
@@ -43,7 +56,7 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
                 stageLightIntensity: $scope.editorSettings.stageLightIntensity,
                 enablePmrem: $scope.editorSettings.enablePmrem,
                 bgColor: $scope.editorSettings.bgColor,
-                environmentId: $scope.editorSettings.selectedEnvironment.id
+                environmentId: $scope.editorSettings.selectedEnvironment ? $scope.editorSettings.selectedEnvironment.id : ""
             }
         }
 
@@ -81,6 +94,7 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
     $scope.restoreDefaults = function () {
         $scope.editorSettings = getDefaultEditorSettings();
         $scope.togglePmrem();
+        $scope.updateEnvImage();
     }
 
     function isSettingsEqual(settings1, settings2) {
@@ -90,7 +104,10 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
             settings1.stageLightIntensity === settings2.stageLightIntensity &&
             settings1.enablePmrem === settings2.enablePmrem &&
             settings1.bgColor === settings2.bgColor &&
-            settings1.selectedEnvironment.id === settings2.selectedEnvironment.id
+            (
+                !settings1.selectedEnvironment && !settings2.selectedEnvironment ||
+                settings1.selectedEnvironment && settings2.selectedEnvironment && settings1.selectedEnvironment.id === settings2.selectedEnvironment.id
+            )
         ) {
             return true;
         } else {

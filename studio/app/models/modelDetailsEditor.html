@@ -32,7 +32,7 @@
                 <label for="environments" class="col-3 col-form-label">Environment</label>
                 <div class="col-9">
                     <select class="form-control" id="environments" ng-model="editorSettings.selectedEnvironment"
-                        ng-change="onEnvironmentSelected()"
+                        ng-change="updateEnvImage()"
                         ng-options="environment.displayName for environment in environments">
                         <option value="">None</option>
                     </select>
@@ -53,7 +53,6 @@
                 <model-viewer id="viewer" src="{{selectedModelSecureUrl}}"
                     environment-intensity="{{editorSettings.envIntensity}}" camera-controls
                     background-color="{{editorSettings.bgColor}}"
-                    environment-image={{editorSettings.selectedEnvironment.imageUrl}}
                     stage-light-intensity={{editorSettings.stageLightIntensity}}
                     shadow-intensity="{{editorSettings.shadowIntensity}}"></model-viewer>
             </div>

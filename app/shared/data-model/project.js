@@ -9,16 +9,20 @@ app.factory("projectSrv", function ($q) {
             this.displayName = parseProject.get("displayName");
             this.thumbnailUrl = parseProject.get("thumbnail")._url;
             this.customerId = parseProject.get("customerId").id;
+            this.isListed = parseProject.get("isListed");
             this.parseProject = parseProject;
         }
     }
 
-    function getByCustomer(customer) {
+    function getByCustomer(customer, onlyListed = true) {
         let async = $q.defer();
 
         const ParseProject = Parse.Object.extend('Project');
         const query = new Parse.Query(ParseProject);
         query.equalTo("customerId", customer.parseCustomer);
+        if (onlyListed) {
+            query.equalTo("isListed", onlyListed);
+        }
         query.find().then(results => {
             console.log('Projects: ', results);
             let projects = [];

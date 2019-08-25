@@ -9,10 +9,10 @@ app.controller("modelsCtrl", function ($scope, customerSrv, projectSrv, modelSrv
         $scope.activeCustomer = customer
 
         // loading projects (categories) and models
-        projectSrv.getByCustomer(customer).then(projects => {
+        projectSrv.getByCustomer(customer, false).then(projects => {
             $scope.projects = projects;
             projects.forEach(project => {
-                modelSrv.getByProject(project).then(models => {
+                modelSrv.getByProject(project, false).then(models => {
                     $scope.models = $scope.models.concat(models);
                 })
             })

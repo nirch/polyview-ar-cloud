@@ -169,13 +169,28 @@ app.factory("modelSrv", function ($q) {
         return async.promise;
     }
 
+    function deleteModel(model) {
+        let async = $q.defer();
+
+        model.parseModel.destroy().then(response => {
+            console.log("model with id " + model.id + " deleted successfully");
+            async.resolve();
+        }, error => {
+            console.error('Error while deleting Model', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
+
     return {
         getByProject: getByProject,
         getByName: getByName,
         getById: getById,
         updateEditorSettings: updateEditorSettings,
         updateModel: updateModel,
-        createModel: createModel
+        createModel: createModel,
+        deleteModel: deleteModel
     }
 });
 

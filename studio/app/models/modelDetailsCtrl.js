@@ -1,4 +1,4 @@
-app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $routeParams) {
+app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $routeParams, $uibModal, $location) {
 
     const DEFAULT_GLTF_UPLOAD_TEXT = "Choose glTF or GLB file";
     const DEFAULT_USDZ_UPLOAD_TEXT = "Choose USDZ file";
@@ -106,5 +106,27 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
 
     $scope.usdzText = function() {
         return $scope.selected.usdz ? $scope.selected.usdz.name : DEFAULT_USDZ_UPLOAD_TEXT;
+    }
+
+    $scope.deleteModel = function() {
+        // Opening delete alert modal
+        let modalInstance = $uibModal.open({
+            templateUrl: 'app/models/deleteModel.html',
+            controller: 'deleteModelCtrl',
+            resolve: {
+                modelToDelete: function() {
+                    return $scope.model;
+                }
+            }
+        });
+
+        // Waiting for a result from the modal
+        modalInstance.result.then(function () {
+            // navigating to models page
+            $location.path("/models");
+        }, function () {
+            console.log("delete model canceled");
+        });
+
     }
 });

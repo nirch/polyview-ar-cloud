@@ -13,7 +13,7 @@ app.factory("modelSrv", function ($q) {
             this.claraId = parseModel.get("claraId");
             this.usdzUrl = parseModel.get("usdz") ? parseModel.get("usdz")._url : null;
             this.gltfUrl = parseModel.get("gltf") ? parseModel.get("gltf")._url : null;
-            this.thumbnailUrl = parseModel.get("thumbnail")._url;
+            this.thumbnailUrl = parseModel.get("thumbnail") ? parseModel.get("thumbnail")._url : null; 
             this.projectId = parseModel.get("projectId").id;
             this.order = parseModel.get("order") ? parseModel.get("order") : 0; // default order is 0
             this.editor = parseModel.get("editor");
@@ -120,7 +120,7 @@ app.factory("modelSrv", function ($q) {
         model.parseModel.set('isListed', model.isListed);
 
         if (params.updateProject) {
-            model.parseModel.set('projectId', params.updateProject.parseProject); 
+            model.parseModel.set('projectId', params.updateProject.parseProject);
         }
 
         if (params.newThumbnail) {
@@ -147,12 +147,35 @@ app.factory("modelSrv", function ($q) {
         return async.promise;
     }
 
+    function createModel(displayName, project, techName) {
+        let async = $q.defer();
+
+        const ParseModel = Parse.Object.extend('Model');
+        const newModel = new ParseModel();
+
+        newModel.set('displayName', displayName);
+        newModel.set('projectId', project.parseProject);
+        newModel.set('techName', techName);
+
+        newModel.save().then(result => {
+            console.log('Model created', result);
+            let model = new Model(result);
+            async.resolve(model);
+        }, error => {
+            console.error('Error while creating Model', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
+
     return {
         getByProject: getByProject,
         getByName: getByName,
         getById: getById,
         updateEditorSettings: updateEditorSettings,
-        updateModel: updateModel
+        updateModel: updateModel,
+        createModel: createModel
     }
 });
 

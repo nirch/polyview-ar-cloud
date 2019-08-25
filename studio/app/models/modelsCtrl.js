@@ -1,4 +1,4 @@
-app.controller("modelsCtrl", function($scope, customerSrv, projectSrv, modelSrv) {
+app.controller("modelsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $uibModal, $location) {
 
     $scope.models = [];
     $scope.project = [];
@@ -19,7 +19,7 @@ app.controller("modelsCtrl", function($scope, customerSrv, projectSrv, modelSrv)
         });
     });
 
-    $scope.filterModels = function(model) {
+    $scope.filterModels = function (model) {
         if ($scope.filterProject && model.projectId != $scope.filterProject) {
             return false;
         }
@@ -29,6 +29,23 @@ app.controller("modelsCtrl", function($scope, customerSrv, projectSrv, modelSrv)
         }
 
         return true;
+    }
+
+    $scope.newModel = function () {
+        // Opening new model modal
+        let modalInstance = $uibModal.open({
+            templateUrl: 'app/models/newModel.html',
+            controller: 'newModelCtrl',
+            size: 'lg'
+        });
+
+        // Waiting for a result from the modal
+        modalInstance.result.then(function (newModel) {
+            // navigating to the new model's page
+            $location.path("/models/" + newModel.id);
+        }, function () {
+            console.log("new model canceled");
+        });
     }
 
 });

@@ -14,7 +14,7 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
         modelSrv.getById($routeParams.id).then(model => {
             $scope.model = model;
 
-            projectSrv.getByCustomer(customer).then(projects => {
+            projectSrv.getByCustomer(customer, false).then(projects => {
                 $scope.projects = projects;
                 projects.forEach(project => {
                     if (project.id === model.projectId) {

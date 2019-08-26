@@ -3,7 +3,7 @@ app.controller("newModelCtrl", function ($scope, $uibModalInstance, customerSrv,
     $scope.model = {};
 
     customerSrv.getActive().then(customer => {
-        projectSrv.getByCustomer(customer).then(projects => {
+        projectSrv.getByCustomer(customer, false).then(projects => {
             $scope.projects = projects;
         });
     });

@@ -11,6 +11,9 @@ app.config(function($routeProvider) {
     }).when("/categories", {
         templateUrl: "app/projects/projects.html",
         controller: "projectsCtrl"
+    }).when("/categories/:id", {
+      templateUrl: "app/projects/projectDetails.html",
+      controller: "projectDetailsCtrl"
     })
 });
 

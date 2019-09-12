@@ -1,5 +1,6 @@
 app.controller("projectDetailsCtrl", function ($scope, customerSrv, projectSrv, $routeParams) {
 
+    var selected = {};
 
     customerSrv.getActive().then(customer => {
         $scope.activeCustomer = customer

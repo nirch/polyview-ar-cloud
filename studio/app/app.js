@@ -8,6 +8,9 @@ app.config(function($routeProvider) {
     }).when("/models/:id" , {
         templateUrl: "app/models/modelDetails.html",
         controller: "modelDetailsCtrl"
+    }).when("/categories", {
+        templateUrl: "app/projects/projects.html",
+        controller: "projectsCtrl"
     })
 });
 

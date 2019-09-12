@@ -1,5 +1,5 @@
 
-app.factory("projectSrv", function ($q) {
+app.factory("projectSrv", function ($q, customerSrv) {
 
 
     class Project {
@@ -7,7 +7,7 @@ app.factory("projectSrv", function ($q) {
             this.id = parseProject.id;
             this.techName = parseProject.get("techName");
             this.displayName = parseProject.get("displayName");
-            this.thumbnailUrl = parseProject.get("thumbnail")._url;
+            this.thumbnailUrl = parseProject.get("thumbnail") ? parseProject.get("thumbnail")._url : null;
             this.customerId = parseProject.get("customerId").id;
             this.isListed = parseProject.get("isListed");
             this.parseProject = parseProject;
@@ -103,12 +103,36 @@ app.factory("projectSrv", function ($q) {
         return async.promise;
     }
 
+    function create(displayName, techName) {
+        let async = $q.defer();
+
+        customerSrv.getActive().then(customer => {
+            const ParseProject = Parse.Object.extend('Project');
+            const newProject = new ParseProject();
+    
+            newProject.set('displayName', displayName);
+            newProject.set('techName', techName);
+            newProject.set('customerId', customer.parseCustomer);
+    
+            newProject.save().then(result => {
+                console.log('Project created', result);
+                let project = new Project(result);
+                async.resolve(project);
+            }, error => {
+                console.error('Error while creating Project', error);
+                async.reject(error);
+            });    
+        });
+
+        return async.promise;
+    }
 
     return {
         getByCustomer: getByCustomer,
         getByName: getByName,
         getById: getById,
-        update: update
+        update: update,
+        create: create
     }
 });
 

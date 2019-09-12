@@ -1,5 +1,5 @@
 
-app.controller("projectsCtrl", function($scope, customerSrv, projectSrv) {
+app.controller("projectsCtrl", function($scope, customerSrv, projectSrv, $uibModal, $location) {
 
     customerSrv.getActive().then(customer => {
         $scope.activeCustomer = customer
@@ -17,6 +17,23 @@ app.controller("projectsCtrl", function($scope, customerSrv, projectSrv) {
         }
 
         return true;
+    }
+
+    $scope.newProject = function () {
+        // Opening new project modal
+        let modalInstance = $uibModal.open({
+            templateUrl: 'app/projects/newProject.html',
+            controller: 'newProjectCtrl',
+            size: 'lg'
+        });
+
+        // Waiting for a result from the modal
+        modalInstance.result.then(newProject => {
+            // navigating to the new project's page
+            $location.path("/categories/" + newProject.id);
+        }, function () {
+            console.log("new project canceled");
+        });
     }
 
 

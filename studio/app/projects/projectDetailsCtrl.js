@@ -1,4 +1,4 @@
-app.controller("projectDetailsCtrl", function ($scope, customerSrv, projectSrv, $routeParams) {
+app.controller("projectDetailsCtrl", function ($scope, customerSrv, projectSrv, $routeParams, $uibModal, $location) {
 
     $scope.selected = {};
     $scope.showSuccessAlert = false;
@@ -52,6 +52,29 @@ app.controller("projectDetailsCtrl", function ($scope, customerSrv, projectSrv, 
 
         });
     }
+
+    $scope.deleteProject = function() {
+        // Opening project alert modal
+        let modalInstance = $uibModal.open({
+            templateUrl: 'app/projects/deleteProject.html',
+            controller: 'deleteProjectCtrl',
+            resolve: {
+                projectToDelete: function() {
+                    return $scope.project;
+                }
+            }
+        });
+
+        // Waiting for a result from the modal
+        modalInstance.result.then(function () {
+            // navigating to projects page
+            $location.path("/categories");
+        }, function () {
+            console.log("delete project canceled");
+        });
+
+    }
+
 
 
 });

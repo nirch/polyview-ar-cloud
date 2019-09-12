@@ -1,5 +1,5 @@
 
-app.factory("projectSrv", function ($q, customerSrv) {
+app.factory("projectSrv", function ($q, customerSrv, modelSrv) {
 
 
     class Project {
@@ -127,12 +127,44 @@ app.factory("projectSrv", function ($q, customerSrv) {
         return async.promise;
     }
 
+    function deleteProject(project) {
+        let async = $q.defer();
+
+        console.log("Delete project started. deleting all models and project");
+        modelSrv.getByProject(project, false).then(models => {
+
+            // first deleting all the models
+            var deleteModelPromises = [];
+            models.forEach(model => {
+                deleteModelPromises.push(modelSrv.deleteModel(model));
+            });
+
+            // after all models are deleted, deleting the project
+            Promise.all(deleteModelPromises).then(() => {
+                project.parseProject.destroy().then(() => {
+                    console.log("project with id " + project.id + " deleted successfully");
+                    async.resolve();        
+                }, error => {
+                    console.error("Error while deleting Project");
+                    async.reject(error);    
+                });
+            }, error => {
+                console.error("Error while deleting models of project");
+                async.reject(error);
+            });
+        });
+
+        return async.promise;
+    }
+
+
     return {
         getByCustomer: getByCustomer,
         getByName: getByName,
         getById: getById,
         update: update,
-        create: create
+        create: create,
+        deleteProject: deleteProject
     }
 });
 

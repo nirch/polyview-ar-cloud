@@ -24,7 +24,7 @@ app.controller("modelsCtrl", function ($scope, customerSrv, projectSrv, modelSrv
             return false;
         }
 
-        if ($scope.modelSearch && !model.displayName.toLowerCase.includes($scope.modelSearch.toLowerCase())) {
+        if ($scope.modelSearch && !model.displayName.toLowerCase().includes($scope.modelSearch.toLowerCase())) {
             return false;
         }
 

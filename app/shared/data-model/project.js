@@ -80,10 +80,35 @@ app.factory("projectSrv", function ($q) {
         return async.promise;
     }
 
+    function update(project, params) {
+        let async = $q.defer();
+
+        project.parseProject.set('displayName', project.displayName);
+        project.parseProject.set('techName', project.techName);
+        project.parseProject.set('isListed', project.isListed);
+
+        if (params.newThumbnail) {
+            project.parseProject.set('thumbnail', new Parse.File(params.newThumbnail.name, { base64: params.newThumbnail.data }, params.newThumbnail.contentType));
+        }
+
+        project.parseProject.save().then((response) => {
+            console.log('Updated Project', response);
+            let project = new Project(response);
+            async.resolve(project);
+        }, (error) => {
+            console.error('Error while updating Project', error);
+            async.reject(error);
+        });
+
+        return async.promise;
+    }
+
+
     return {
         getByCustomer: getByCustomer,
         getByName: getByName,
-        getById: getById
+        getById: getById,
+        update: update
     }
 });
 

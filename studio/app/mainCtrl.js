@@ -7,4 +7,6 @@ app.controller("mainCtrl", function($scope, customerSrv, $location) {
         }
     });
 
+    $scope.location = $location;
+
 });

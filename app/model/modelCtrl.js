@@ -1,5 +1,5 @@
 
-app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $sce, $document, $location) {
+app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $sce, $document, $location, $rootScope) {
 
     $scope.notFound = false;
 
@@ -12,6 +12,9 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
             $scope.projectHref = "#!/" + project.techName;
             modelSrv.getByName(project, $routeParams.modelName).then(model => {
                 $scope.model = model;
+                $rootScope.metadataDesc = model.displayName;
+                $rootScope.metadataThumb = model.thumbnailUrl;
+                $rootScope.metadataURL = `https://${customer.techName}.polyview3d.com/#!/${project.techName}/${model.techName}`;
                 if ($location.search().polyviewer) {
                     $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id + "?polyviewer");
                 } else {

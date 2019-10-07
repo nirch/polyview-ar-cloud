@@ -1,5 +1,5 @@
 
-app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $location) {
+app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $location, $rootScope) {
 
     $scope.notFound = false;
 
@@ -9,6 +9,9 @@ app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projec
         $scope.customerHref= "#!/";
         projectSrv.getByName(customer, $routeParams.projectName).then(project => {
             $scope.project = project;
+            $rootScope.metadataDesc = project.displayName;
+            $rootScope.metadataThumb = project.thumbnailUrl;
+            $rootScope.metadataURL = `https://${customer.techName}.polyview3d.com/#!/${project.techName}`;
             modelSrv.getByProject(project).then(models => {
                 $scope.models = models;
             });

@@ -1,11 +1,12 @@
 
-app.controller('customerCtrl', function($scope, customerSrv, projectSrv, $location, $rootScope) {
+app.controller('customerCtrl', function($scope, customerSrv, projectSrv, $location, ngMeta) {
 
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;
-        $rootScope.metadataDesc = "";
-        $rootScope.metadataThumb = customer.logoUrl;
-        $rootScope.metadataURL = `https://${customer.techName}.polyview3d.com`;
+        ngMeta.setTitle(customer.displayName + "'s 3D Library")
+        ngMeta.setTag("desc", "");
+        ngMeta.setTag("thumb",  customer.logoUrl);
+        ngMeta.setTag("url", `https://${customer.techName}.polyview3d.com/#!/`);
 
         projectSrv.getByCustomer(customer).then(projects => {
             $scope.projects = projects;

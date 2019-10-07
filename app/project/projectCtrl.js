@@ -1,5 +1,5 @@
 
-app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $location, $rootScope) {
+app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $location, ngMeta) {
 
     $scope.notFound = false;
 
@@ -9,10 +9,11 @@ app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projec
         $scope.customerHref= "#!/";
         projectSrv.getByName(customer, $routeParams.projectName).then(project => {
             $scope.project = project;
-            $rootScope.metadataDesc = project.displayName;
-            $rootScope.metadataThumb = project.thumbnailUrl;
-            $rootScope.metadataURL = `https://${customer.techName}.polyview3d.com/#!/${project.techName}`;
-            modelSrv.getByProject(project).then(models => {
+            ngMeta.setTitle(customer.displayName + "'s 3D Library")
+            ngMeta.setTag("desc", project.displayName);
+            ngMeta.setTag("thumb",  project.thumbnailUrl);
+            ngMeta.setTag("url", `https://${customer.techName}.polyview3d.com/#!/${project.techName}`);
+        modelSrv.getByProject(project).then(models => {
                 $scope.models = models;
             });
 

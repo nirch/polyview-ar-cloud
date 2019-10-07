@@ -1,5 +1,5 @@
 
-var app = angular.module("arCloud", ['ngRoute']);
+var app = angular.module("arCloud", ['ngRoute', 'ngMeta']);
 
 app.config(function ($routeProvider) {
   $routeProvider
@@ -18,7 +18,11 @@ app.config(function ($routeProvider) {
     })
 });
 
-app.controller("mainCtrl", function ($scope, customerSrv) {
+app.run(function(ngMeta) {
+  ngMeta.init();
+});
+
+app.controller("mainCtrl", function ($scope, customerSrv, ngMeta) {
   customerSrv.getActive().then(customer => {
     $scope.title = customer.displayName + "'s 3D Library"
   });

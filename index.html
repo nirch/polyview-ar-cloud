@@ -7,13 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 
-    <!-- Social Media -->
-    <meta property="og:title" content="{{title}}">
-    <meta property="og:description" content="{{metadataDesc}}">
-    <meta property="og:image" content="{{metadataThumb}}">
-    <meta property="og:url" content="{{metadataURL}}">
-    <meta name="twitter:card" content="summary_large_image">
-
     <!-- Angular JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-route.min.js"></script>
@@ -57,6 +50,8 @@
     <script src="js/GLTFLoader.js"></script>
     <script src="js/OrbitControls.js"></script>
 
+    <!-- ngMeta - dynamic meta tags -->
+    <script src="js/ngMeta.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
     <script src="app/app.js"></script>
@@ -68,7 +63,15 @@
     <script src="app/shared/data-model/model.js"></script>
     <script src="app/shared/navbar-consumer/navbar-consumer.js"></script>
     <script src="app/model/viewerTest.js"></script>
-    <title>{{title}}</title>
+    <title>{{ngMeta.title}}</title>
+
+    <!-- Social Media -->
+    <meta property="og:title" content="{{ngMeta.title}}">
+    <meta property="og:description" content="{{ngMeta.desc}}">
+    <meta property="og:image" content="{{ngMeta.thumb}}">
+    <meta property="og:url" content="{{ngMeta.url}}">
+    <meta name="twitter:card" content="summary_large_image">
+
 </head>
 
 <body>

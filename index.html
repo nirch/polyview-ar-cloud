@@ -50,9 +50,7 @@
     <script src="js/GLTFLoader.js"></script>
     <script src="js/OrbitControls.js"></script>
 
-    <!-- ngMeta - dynamic meta tags -->
-    <script src="js/ngMeta.min.js"></script>
-
+    
     <link rel="stylesheet" href="style.css">
     <script src="app/app.js"></script>
     <script src="app/customer/customerCtrl.js"></script>
@@ -66,10 +64,10 @@
     <title>{{ngMeta.title}}</title>
 
     <!-- Social Media -->
-    <meta property="og:title" content="{{ngMeta.title}}">
-    <meta property="og:description" content="{{ngMeta.desc}}">
-    <meta property="og:image" content="{{ngMeta.thumb}}">
-    <meta property="og:url" content="{{ngMeta.url}}">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{metaDesc}}">
+    <meta property="og:image" content="{{metaThumb}}">
+    <meta property="og:url" content="{{metaURL}}">
     <meta name="twitter:card" content="summary_large_image">
 
 </head>

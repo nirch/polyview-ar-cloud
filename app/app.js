@@ -1,5 +1,5 @@
 
-var app = angular.module("arCloud", ['ngRoute', 'ngMeta']);
+var app = angular.module("arCloud", ['ngRoute']);
 
 app.config(function ($routeProvider) {
   $routeProvider
@@ -18,13 +18,17 @@ app.config(function ($routeProvider) {
     })
 });
 
-app.run(function(ngMeta) {
-  ngMeta.init();
-});
+app.controller("mainCtrl", function ($scope, customerSrv, $location) {
 
-app.controller("mainCtrl", function ($scope, customerSrv, ngMeta) {
+  let host = $location.host();
+  let subdomain = host.indexOf('.') > 0 ? host.split('.')[0] : "";
+  let subdomainCapitalized = subdomain.charAt(0).toUpperCase() + subdomain.slice(1);
+  $scope.title = subdomainCapitalized + "'s 3D Library";
+  $scope.metaThumb = `https://${$location.host()}/assets/images/3d-modeling-icon-6.jpg`
+
   customerSrv.getActive().then(customer => {
-    $scope.title = customer.displayName + "'s 3D Library"
+    console.log(customer);
+    // $scope.title = customer.displayName + "'s 3D Library"
   });
 })
 

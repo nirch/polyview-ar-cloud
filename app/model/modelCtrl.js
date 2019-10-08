@@ -1,7 +1,14 @@
 
-app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $sce, $document, $location, ngMeta) {
+app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $sce, $document, $location, $rootScope) {
 
     $scope.notFound = false;
+
+    // meta tags
+    let projectNameCap = $routeParams.projectName.charAt(0).toUpperCase() + $routeParams.projectName.slice(1);
+    let modelNameCap = $routeParams.modelName.charAt(0).toUpperCase() + $routeParams.modelName.slice(1);
+    $rootScope.metaDesc = projectNameCap + " / " + modelNameCap;
+    $rootScope.metaURL = $location.absUrl();
+
 
     // Loading the model
     customerSrv.getActive().then(customer => {
@@ -12,10 +19,7 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
             $scope.projectHref = "#!/" + project.techName;
             modelSrv.getByName(project, $routeParams.modelName).then(model => {
                 $scope.model = model;
-                ngMeta.setTitle(customer.displayName + "'s 3D Library")
-                ngMeta.setTag("desc", model.displayName);
-                ngMeta.setTag("thumb",  model.thumbnailUrl);
-                ngMeta.setTag("url", `https://${customer.techName}.polyview3d.com/#!/${project.techName}/${model.techName}`);
+
                 if ($location.search().polyviewer) {
                     $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id + "?polyviewer");
                 } else {

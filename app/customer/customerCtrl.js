@@ -1,12 +1,10 @@
 
-app.controller('customerCtrl', function($scope, customerSrv, projectSrv, $location, ngMeta) {
+app.controller('customerCtrl', function($scope, customerSrv, projectSrv, $location, $rootScope) {
+
+    $rootScope.metaURL = $location.absUrl();
 
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;
-        ngMeta.setTitle(customer.displayName + "'s 3D Library")
-        ngMeta.setTag("desc", "");
-        ngMeta.setTag("thumb",  customer.logoUrl);
-        ngMeta.setTag("url", `https://${customer.techName}.polyview3d.com/#!/`);
 
         projectSrv.getByCustomer(customer).then(projects => {
             $scope.projects = projects;

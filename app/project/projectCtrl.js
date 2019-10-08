@@ -1,7 +1,12 @@
 
-app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $location, ngMeta) {
+app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projectSrv, modelSrv, $location, $rootScope) {
 
     $scope.notFound = false;
+
+    // meta tags
+    let projectNameCap = $routeParams.projectName.charAt(0).toUpperCase() + $routeParams.projectName.slice(1);
+    $rootScope.metaDesc = projectNameCap + " Category";
+    $rootScope.metaURL = $location.absUrl();
 
     // Loading the project and models
     customerSrv.getActive().then(customer => {
@@ -9,10 +14,6 @@ app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projec
         $scope.customerHref= "#!/";
         projectSrv.getByName(customer, $routeParams.projectName).then(project => {
             $scope.project = project;
-            ngMeta.setTitle(customer.displayName + "'s 3D Library")
-            ngMeta.setTag("desc", project.displayName);
-            ngMeta.setTag("thumb",  project.thumbnailUrl);
-            ngMeta.setTag("url", `https://${customer.techName}.polyview3d.com/#!/${project.techName}`);
         modelSrv.getByProject(project).then(models => {
                 $scope.models = models;
             });

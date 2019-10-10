@@ -1,10 +1,13 @@
 
 app.controller('customerCtrl', function($scope, customerSrv, projectSrv, $location, $rootScope) {
 
-    $rootScope.metaURL = $location.absUrl();
-
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;
+
+        // dynamic meta tags
+        $rootScope.metaDesc = "";
+        $rootScope.metaThumb = customer.logoUrl;
+        $rootScope.metaURL = `https://${customer.techName}.polyview3d.com`;
 
         projectSrv.getByCustomer(customer).then(projects => {
             $scope.projects = projects;

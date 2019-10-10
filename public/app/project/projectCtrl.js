@@ -3,17 +3,18 @@ app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projec
 
     $scope.notFound = false;
 
-    // meta tags
-    let projectNameCap = $routeParams.projectName.charAt(0).toUpperCase() + $routeParams.projectName.slice(1);
-    $rootScope.metaDesc = projectNameCap + " Category";
-    $rootScope.metaURL = $location.absUrl();
-
     // Loading the project and models
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;
         $scope.customerHref= "#!/";
         projectSrv.getByName(customer, $routeParams.projectName).then(project => {
             $scope.project = project;
+
+            // dynamic meta tags
+            $rootScope.metaDesc = project.displayName + " Category"
+            $rootScope.metaThumb = project.thumbnailUrl;
+            $rootScope.metaURL = `https://${customer.techName}.polyview3d.com/${project.techName}`;
+
         modelSrv.getByProject(project).then(models => {
                 $scope.models = models;
             });

@@ -1,0 +1,13 @@
+<div>
+    <h1 class="display-4">{{model.displayName}}</h1>
+    <div class="container-fluid">
+        <uib-tabset justified="true" id="tabs">
+            <uib-tab index="0" heading="Details" select="showViewer = false">
+                <div ng-include="'app/models/modelDetailsMain.html'"></div>
+            </uib-tab>
+            <uib-tab index="1" heading="Viewer & Editor" select="showViewer = true">
+                <div ng-if="showViewer" ng-include="'app/models/modelDetailsEditor.html'"></div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+<form class="mt-3">
+    <div class="form-group row">
+        <label for="displayName" class="col-sm-2 col-form-label">Display Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="displayName" ng-model="model.displayName">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="project" class="col-sm-2 col-form-label">Category</label>
+        <div class="col-sm-10">
+            <select class="form-control" id="projects" ng-model="selected.project"
+                ng-options="project.displayName for project in projects">
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="techName" class="col-sm-2 col-form-label">Tech Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="techName" ng-model="model.techName">
+            <small class="text-muted">Tech name cannot have spaces. This will used be in the model
+                hosted
+                URL.</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Thumbnail</label>
+        <div class="col-sm-5">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="thumbnail" image-with-preview
+                    ng-model="selected.thumbnail" accept="image/png,image/jpeg">
+                <label class="custom-file-label" for="thumbnail">Choose Thumbnail</label>
+                <small class="text-muted">16X9 aspect ratio for the thumbnail works best</small>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <img ng-show="!selected.thumbnail" class="img-fluid" ng-src="{{model.thumbnailUrl}}">
+            <img ng-show="selected.thumbnail" class="img-fluid" ng-src="{{selected.thumbnail.src}}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">glTF / glb</label>
+        <div class="col-sm-8">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="gltf" accept=".gltf,.glb" custom-on-change="changeGltf">
+                <label class="custom-file-label" for="gltf">{{gltfText()}}</label>
+                <small class="text-muted">Viewer and Android AR uses this format</small>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <a name="" id="" class="btn btn-link text-dark" ng-href="{{model.gltfUrl}}" role="button"
+                ng-show="model.gltfUrl">Download <i class="fas fa-file-download"></i></a>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">USDZ</label>
+        <div class="col-sm-8">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="usdz" accept=".usdz" custom-on-change="changeUSDZ">
+                <label class="custom-file-label" for="usdz">{{usdzText()}}</label>
+                <small class="text-muted">iOS AR uses this format</small>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <a name="" id="" class="btn btn-link text-dark" ng-href="{{model.usdzUrl}}" role="button"
+                ng-show="model.usdzUrl">Download <i class="fas fa-file-download"></i></a>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-sm-2">Hosted Webpage</div>
+        <div class="col-sm-10">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="isLive" ng-model="model.isLive">
+                <label class="form-check-label" for="isLive">
+                    Is Live
+                </label>
+                <small class="text-muted">Create a hosted webpage for this model</small>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="isListed" ng-model="model.isListed"
+                    ng-disabled="!model.isLive">
+                <label class="form-check-label" for="isListed">
+                    Is Listed
+                </label>
+                <small class="text-muted">Listed inside category page or accessible only with direct
+                    link</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Hosted Link</label>
+        <div class="col-sm-8">
+            <pre
+                class="bg-light p-2"><code ng-show="model.isLive">http://{{activeCustomer.techName}}.polyview3d.com/#!/{{selected.project.techName}}/{{model.techName}}</code><code ng-show="!model.isLive">N/A (check "Is Live" above to enable)</code></code></pre>
+        </div>
+        <div class="col-sm-2">
+            <a name="" id="" class="btn btn-link text-dark"
+                ng-href="http://{{activeCustomer.techName}}.polyview3d.com/#!/{{selected.project.techName}}/{{model.techName}}"
+                role="button" target="_blank">View <i class="far fa-eye"></i></i></a>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Embed Code</label>
+        <div class="col-sm-10">
+            <pre
+                class="bg-light p-2"><code>&lt;iframe src="http://{{activeCustomer.techName}}.polyview3d.com/embed/#!/{{model.id}}"&gt;</code></pre>
+        </div>
+    </div>
+
+    <div class="form-group row apply-btns-row">
+        <div ng-if="showSuccessAlert" uib-alert class="alert-success" close="closeAlert('success')">
+            <strong>Success!</strong> Model successfully saved</div>
+        <div ng-if="showSavingAlert" uib-alert class="alert-warning" close="closeAlert('saving')"><strong>Saving!</strong> Please wait... <div
+                class="spinner-border spinner-border-sm" role="status">
+            </div>
+        </div>
+        <div ng-if="showErrorAlert" uib-alert class="alert-danger" close="closeAlert('error')"><strong>Failure!</strong>
+            Error in saving the model</div>
+        <button type="submit" class="btn btn-primary ml-auto mx-2" ng-click="updateModel()">Update</button>
+        <button type="submit" class="btn btn-danger" ng-click="deleteModel()">Delete</button>
+    </div>
+</form>

@@ -17,7 +17,7 @@ app.config(function ($routeProvider, $locationProvider) {
       controller: 'viewerTestCtrl'
     })
 
-    $locationProvider.hashPrefix('!');
+    $locationProvider.html5Mode(true);
 });
 
 app.controller("mainCtrl", function ($scope, customerSrv, $location) {

@@ -1,7 +1,7 @@
 
 var app = angular.module("arCloud", ['ngRoute']);
 
-app.config(function ($routeProvider) {
+app.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {
       templateUrl: 'app/customer/customer.html',
@@ -16,6 +16,8 @@ app.config(function ($routeProvider) {
       templateUrl: 'app/model/viewerTest.html',
       controller: 'viewerTestCtrl'
     })
+
+    $locationProvider.hashPrefix('!');
 });
 
 app.controller("mainCtrl", function ($scope, customerSrv, $location) {

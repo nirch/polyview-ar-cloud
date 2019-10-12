@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+app.use(require('prerender-node').set('prerenderToken', '5dXyDG2XnoirJXnU8ncs'));
 
 app.use('/', express.static('public'));
 

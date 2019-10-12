@@ -6,7 +6,7 @@ app.controller('projectCtrl', function($scope, $routeParams, customerSrv, projec
     // Loading the project and models
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;
-        $scope.customerHref= "#!/";
+        $scope.customerHref= "/";
         projectSrv.getByName(customer, $routeParams.projectName).then(project => {
             $scope.project = project;
 

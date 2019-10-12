@@ -6,10 +6,10 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
     // Loading the model
     customerSrv.getActive().then(customer => {
         $scope.customer = customer;
-        $scope.customerHref = "#!/";
+        $scope.customerHref = "/";
         projectSrv.getByName(customer, $routeParams.projectName).then(project => {
             $scope.project = project;
-            $scope.projectHref = "#!/" + project.techName;
+            $scope.projectHref = "/" + project.techName;
             modelSrv.getByName(project, $routeParams.modelName).then(model => {
                 $scope.model = model;
 

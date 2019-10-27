@@ -16,22 +16,21 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         $scope.selectedModel = model;
         $scope.selectedModelSecureUrl = $sce.trustAsResourceUrl($scope.selectedModel.gltfUrl);
         $scope.editorSettings = getSelectedModelEditorSettings();
-        $scope.togglePmrem();
         $scope.updateEnvImage();
     });
     });
 
 
-    $scope.togglePmrem = function () {
-        var modelViewerElement = angular.element(document.querySelector('#viewer'));
-        if ($scope.editorSettings.enablePmrem) {
-            // adding attribute
-            modelViewerElement.attr("experimental-pmrem", "");
-        } else {
-            // removing attribute
-            modelViewerElement.removeAttr("experimental-pmrem");
-        }
-    }
+    // $scope.togglePmrem = function () {
+    //     var modelViewerElement = angular.element(document.querySelector('#viewer'));
+    //     if ($scope.editorSettings.enablePmrem) {
+    //         // adding attribute
+    //         modelViewerElement.attr("experimental-pmrem", "");
+    //     } else {
+    //         // removing attribute
+    //         modelViewerElement.removeAttr("experimental-pmrem");
+    //     }
+    // }
 
     $scope.updateEnvImage = function() {
         var modelViewerElement = angular.element(document.querySelector('#viewer'));
@@ -51,10 +50,8 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         // If the settings to save are the default ones than saving 'undefined'
         if (!$scope.isDefault()) {
             settingsToSave = {
-                envIntensity: $scope.editorSettings.envIntensity,
+                exposure: $scope.editorSettings.exposure,
                 shadowIntensity: $scope.editorSettings.shadowIntensity,
-                stageLightIntensity: $scope.editorSettings.stageLightIntensity,
-                enablePmrem: $scope.editorSettings.enablePmrem,
                 bgColor: $scope.editorSettings.bgColor,
                 environmentId: $scope.editorSettings.selectedEnvironment ? $scope.editorSettings.selectedEnvironment.id : ""
             }
@@ -93,16 +90,13 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
     // Restoring the editor settings to the default state (still user needs to save)
     $scope.restoreDefaults = function () {
         $scope.editorSettings = getDefaultEditorSettings();
-        $scope.togglePmrem();
         $scope.updateEnvImage();
     }
 
     function isSettingsEqual(settings1, settings2) {
         if (
-            settings1.envIntensity === settings2.envIntensity &&
+            settings1.exposure === settings2.exposure &&
             settings1.shadowIntensity === settings2.shadowIntensity &&
-            settings1.stageLightIntensity === settings2.stageLightIntensity &&
-            settings1.enablePmrem === settings2.enablePmrem &&
             settings1.bgColor === settings2.bgColor &&
             (
                 !settings1.selectedEnvironment && !settings2.selectedEnvironment ||
@@ -124,10 +118,8 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         } else {
             // Loading saved settings
             settings = {
-                envIntensity: $scope.selectedModel.editor.envIntensity,
+                exposure: $scope.selectedModel.editor.exposure ? $scope.selectedModel.editor.exposure : 1,
                 shadowIntensity: $scope.selectedModel.editor.shadowIntensity,
-                stageLightIntensity: $scope.selectedModel.editor.stageLightIntensity,
-                enablePmrem: $scope.selectedModel.editor.enablePmrem,
                 bgColor: $scope.selectedModel.editor.bgColor,
                 selectedEnvironment: getEnvironmentById($scope.selectedModel.editor.environmentId)
             }
@@ -139,10 +131,8 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
     // Getting the default env settings
     function getDefaultEditorSettings() {
         let defaultSettings = {
-            envIntensity: 2,
+            exposure: 1,
             shadowIntensity: 0.2,
-            stageLightIntensity: 1,
-            enablePmrem: true,
             bgColor: "#ffffff"
         }
 

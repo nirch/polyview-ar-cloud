@@ -27,7 +27,6 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
     
         getViewerSetting($scope.model).then(settings => {
             $scope.viewerSettings = settings;
-            togglePmrem();
             updateEnvImage();
         });
 
@@ -307,10 +306,8 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
 
              // Loading saved settings
              viewerSettings = {
-                envIntensity: model.editor.envIntensity,
+                exposure: model.editor.exposure ? model.editor.exposure : 1,
                 shadowIntensity: model.editor.shadowIntensity,
-                stageLightIntensity: model.editor.stageLightIntensity,
-                enablePmrem: model.editor.enablePmrem,
                 envImage: env.imageUrl
             }
         }
@@ -322,26 +319,24 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         const defaultEnvId = "otCxXiSe6F";
         const env = await environmentSrv.getById(defaultEnvId);
         const defaultSettings = {
-            envIntensity: 2,
+            exposure: 1,
             shadowIntensity: 0.2,
-            stageLightIntensity: 1,
-            enablePmrem: true,
             envImage: env.imageUrl
         }
 
         return defaultSettings;
     }
 
-    function togglePmrem () {
-        var modelViewerElement = angular.element(document.querySelector('#model-viewer'));
-        if ($scope.viewerSettings.enablePmrem) {
-            // adding attribute
-            modelViewerElement.attr("experimental-pmrem", "");
-        } else {
-            // removing attribute
-            modelViewerElement.removeAttr("experimental-pmrem");
-        }
-    }
+    // function togglePmrem () {
+    //     var modelViewerElement = angular.element(document.querySelector('#model-viewer'));
+    //     if ($scope.viewerSettings.enablePmrem) {
+    //         // adding attribute
+    //         modelViewerElement.attr("experimental-pmrem", "");
+    //     } else {
+    //         // removing attribute
+    //         modelViewerElement.removeAttr("experimental-pmrem");
+    //     }
+    // }
 
     function updateEnvImage () {
         var modelViewerElement = angular.element(document.querySelector('#model-viewer'));

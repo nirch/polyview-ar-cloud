@@ -2,10 +2,10 @@
     <div class="row">
         <form class="col-md-5 pt-3">
             <div class="form-group row">
-                <label for="env-intensity" class="col-3 col-form-label">Environment Intensity</label>
+                <label for="exposure" class="col-3 col-form-label">Exposure</label>
                 <div class="col-9">
-                    <input type="number" class="form-control" ng-model="editorSettings.envIntensity" step="0.05"
-                        id="env-intensity">
+                    <input type="number" class="form-control" ng-model="editorSettings.exposure" step="0.05"
+                        id="exposure">
                 </div>
             </div>
             <div class="form-group row">
@@ -13,13 +13,6 @@
                 <div class="col-9">
                     <input type="number" class="form-control" ng-model="editorSettings.shadowIntensity" step="0.05"
                         id="shadow-intensity">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="stage-light-intensity" class="col-3 col-form-label">Stage Light Intensity</label>
-                <div class="col-9">
-                    <input type="number" class="form-control" ng-model="editorSettings.stageLightIntensity" step="0.05"
-                        id="stage-light-intensity">
                 </div>
             </div>
             <div class="form-group row">
@@ -38,22 +31,13 @@
                     </select>
                 </div>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="pmrem" ng-model="editorSettings.enablePmrem"
-                    ng-change="togglePmrem()">
-                <label class="form-check-label" for="defaultCheck1">
-                    Enable experimental pmrem (<a href="https://googlewebcomponents.github.io/model-viewer/index.html"
-                        target="_blank">read here</a>)
-                </label>
-            </div>
         </form>
 
         <div class="col-md-7 pt-3">
             <div class="viewer-container">
                 <model-viewer id="viewer" src="{{selectedModelSecureUrl}}"
-                    environment-intensity="{{editorSettings.envIntensity}}" camera-controls
+                    exposure="{{editorSettings.exposure}}" camera-controls
                     background-color="{{editorSettings.bgColor}}"
-                    stage-light-intensity={{editorSettings.stageLightIntensity}}
                     shadow-intensity="{{editorSettings.shadowIntensity}}"></model-viewer>
             </div>
         </div>

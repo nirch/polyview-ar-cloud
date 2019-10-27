@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="arCloud" ng-controller="mainCtrl">
+
+<head>
+    <meta name="fragment" content="!">
+    <base href="/"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+
+    <!-- Angular JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-route.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <!-- Parse -->
+    <script src="node_modules/parse/dist/parse.min.js"></script>
+    <script>
+        Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
+        Parse.initialize(
+            'b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE', // This is your Application ID
+            'NeokbBCMAWxomOjJgiXeduKrQLundR1nHLxAysbG' // This is your Javascript key
+        );
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115185862-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+    <script src="js/three.js"></script>
+    <script src="js/GLTFLoader.js"></script>
+    <script src="js/OrbitControls.js"></script>
+
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="app/app.js"></script>
+    <script src="app/customer/customerCtrl.js"></script>
+    <script src="app/project/projectCtrl.js"></script>
+    <script src="app/model/modelCtrl.js"></script>
+    <script src="app/shared/data-model/customer.js"></script>
+    <script src="app/shared/data-model/project.js"></script>
+    <script src="app/shared/data-model/model.js"></script>
+    <script src="app/shared/navbar-consumer/navbar-consumer.js"></script>
+    <script src="app/model/viewerTest.js"></script>
+    <title>{{ngMeta.title}}</title>
+
+    <!-- Social Media -->
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{metaDesc}}">
+    <meta property="og:image" content="{{metaThumb}}">
+    <meta property="og:url" content="{{metaURL}}">
+    <meta name="twitter:card" content="summary_large_image">
+
+</head>
+
+<body>
+
+    <ng-view></ng-view>
+
+    <footer>
+        Powered by <a class="polyview" href="http://www.polyview3d.com" target="_blank">Polyview</a>
+    </footer>
+
+</body>
+
+</html>

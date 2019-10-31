@@ -2,7 +2,7 @@
 <html lang="en" ng-app="arCloudAdminApp">
 
 <head>
-    <title>Title</title>
+    <title>Polyview AR Cloud</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,6 +30,12 @@
             'b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE', // This is your Application ID
             'NeokbBCMAWxomOjJgiXeduKrQLundR1nHLxAysbG' // This is your Javascript key
         );
+
+        // If there is not logged in user cannot be in this page
+        if (!Parse.User.current()) {
+            window.location.hash = "";
+            window.location.pathname = "/login";
+        }
     </script>
 
     <script src="js/ng-image-input-with-preview.js"></script>
@@ -42,6 +48,7 @@
     <script src="../app/shared/data-model/project.js"></script>
     <script src="../app/shared/data-model/model.js"></script>
     <script src="../app/shared/data-model/environment.js"></script>
+    <script src="../app/shared/data-model/user.js"></script>
     <script src="app/mainCtrl.js"></script>
     <script src="app/models/modelsCtrl.js"></script>
     <script src="app/models/modelDetailsCtrl.js"></script>
@@ -52,6 +59,7 @@
     <script src="app/projects/projectDetailsCtrl.js"></script>    
     <script src="app/projects/newProjectCtrl.js"></script>    
     <script src="app/projects/deleteProjectCtrl.js"></script>    
+    <script src="app/users.js"></script>
 </head>
 
 <body ng-controller="mainCtrl">
@@ -106,7 +114,7 @@
                 </div>
             </li>
             <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="userDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-user-circle fa-fw"></i>
                 </a>
@@ -114,7 +122,7 @@
                     <a class="dropdown-item" href="#">Settings</a>
                     <a class="dropdown-item" href="#">Activity Log</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                    <a class="dropdown-item" href="javascript:void(0)" ng-click="logout()" data-toggle="modal" data-target="#logoutModal">Logout</a>
                 </div>
             </li>
         </ul>

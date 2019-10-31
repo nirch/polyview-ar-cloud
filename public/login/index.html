@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Polyview AR Cloud - Login</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap & Font Awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+
+    <script src="../node_modules/parse/dist/parse.min.js"></script>
+    <script>
+        Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
+        Parse.initialize(
+            'b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE', // This is your Application ID
+            'NeokbBCMAWxomOjJgiXeduKrQLundR1nHLxAysbG' // This is your Javascript key
+        );
+
+        // If there is not logged in user cannot be in this page
+        if (Parse.User.current()) {
+            window.location.hash = "";
+            window.location.pathname = "/studio";
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+    <script src="../app/shared/data-model/user.js"></script>
+</head>
+
+<body ng-app="arCloudLogin">
+    <div class="login" ng-controller="loginCtrl" ng-cloak>
+        <h1>Login to AR Cloud</h1>
+        <p>or <a href="#!/signup">create an account</a></p>
+        <div class="alert alert-danger" role="alert" ng-show="invalidLogin">
+            <strong>Invalid Login!</strong> incorrect email or password
+        </div>
+        <form>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email" ng-model="email" placeholder="Enter email address">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" ng-model="pwd" placeholder="Enter password">
+            </div>
+            <button type="button" class="btn btn-success btn-block" ng-click="login()">Login</button>
+        </form>
+    </div>
+</body>
+
+</html>

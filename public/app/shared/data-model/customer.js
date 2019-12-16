@@ -8,7 +8,7 @@ app.factory("customerSrv", function ($location, $q) {
             this.id = parseCustomer.id;
             this.techName = parseCustomer.get("techName");
             this.displayName = parseCustomer.get("displayName");
-            this.logoUrl = parseCustomer.get("logo")._url;
+            this.logoUrl = parseCustomer.get("logo") ? parseCustomer.get("logo")._url : "";
             this.websiteUrl = parseCustomer.get("websiteUrl");
             this.parseCustomer = parseCustomer;
         }

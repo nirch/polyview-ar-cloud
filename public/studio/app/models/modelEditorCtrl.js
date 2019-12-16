@@ -16,6 +16,7 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         $scope.selectedModel = model;
         $scope.selectedModelSecureUrl = $sce.trustAsResourceUrl($scope.selectedModel.gltfUrl);
         $scope.editorSettings = getSelectedModelEditorSettings();
+        $scope.toggleAnimation();
         $scope.updateEnvImage();
     });
     });
@@ -31,6 +32,19 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
     //         modelViewerElement.removeAttr("experimental-pmrem");
     //     }
     // }
+
+    $scope.toggleAnimation = function () {
+        var modelViewerElement = angular.element(document.querySelector('#viewer'));
+        if ($scope.editorSettings.enableAnimation) {
+            // adding attribute
+            modelViewerElement.attr("autoplay", "");
+        } else {
+            // removing attribute
+            modelViewerElement.removeAttr("autoplay");
+            // document.querySelector('#viewer').currentTime = 0;
+            document.querySelector('#viewer').pause();
+        }
+    }
 
     $scope.updateEnvImage = function() {
         var modelViewerElement = angular.element(document.querySelector('#viewer'));
@@ -53,7 +67,8 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
                 exposure: $scope.editorSettings.exposure,
                 shadowIntensity: $scope.editorSettings.shadowIntensity,
                 bgColor: $scope.editorSettings.bgColor,
-                environmentId: $scope.editorSettings.selectedEnvironment ? $scope.editorSettings.selectedEnvironment.id : ""
+                environmentId: $scope.editorSettings.selectedEnvironment ? $scope.editorSettings.selectedEnvironment.id : "",
+                enableAnimation: $scope.editorSettings.enableAnimation,
             }
         }
 
@@ -90,6 +105,7 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
     // Restoring the editor settings to the default state (still user needs to save)
     $scope.restoreDefaults = function () {
         $scope.editorSettings = getDefaultEditorSettings();
+        $scope.toggleAnimation();	
         $scope.updateEnvImage();
     }
 
@@ -98,6 +114,7 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
             settings1.exposure === settings2.exposure &&
             settings1.shadowIntensity === settings2.shadowIntensity &&
             settings1.bgColor === settings2.bgColor &&
+            settings1.enableAnimation === settings2.enableAnimation &&
             (
                 !settings1.selectedEnvironment && !settings2.selectedEnvironment ||
                 settings1.selectedEnvironment && settings2.selectedEnvironment && settings1.selectedEnvironment.id === settings2.selectedEnvironment.id
@@ -118,10 +135,11 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         } else {
             // Loading saved settings
             settings = {
-                exposure: $scope.selectedModel.editor.exposure ? $scope.selectedModel.editor.exposure : 1,
+                exposure: $scope.selectedModel.editor.exposure !== undefined ? $scope.selectedModel.editor.exposure : 1,
                 shadowIntensity: $scope.selectedModel.editor.shadowIntensity,
                 bgColor: $scope.selectedModel.editor.bgColor,
-                selectedEnvironment: getEnvironmentById($scope.selectedModel.editor.environmentId)
+                selectedEnvironment: getEnvironmentById($scope.selectedModel.editor.environmentId),
+                enableAnimation: $scope.selectedModel.editor.enableAnimation !== undefined ? $scope.selectedModel.editor.enableAnimation : true
             }
         }
 
@@ -133,7 +151,8 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
         let defaultSettings = {
             exposure: 1,
             shadowIntensity: 0.2,
-            bgColor: "#ffffff"
+            bgColor: "#ffffff",
+            enableAnimation: true
         }
 
         let defaultEnvId = "otCxXiSe6F";

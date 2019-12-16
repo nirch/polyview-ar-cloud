@@ -27,6 +27,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
     
         getViewerSetting($scope.model).then(settings => {
             $scope.viewerSettings = settings;
+            toggleAnimation();	
             updateEnvImage();
         });
 
@@ -306,9 +307,10 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
 
              // Loading saved settings
              viewerSettings = {
-                exposure: model.editor.exposure ? model.editor.exposure : 1,
+                exposure: model.editor.exposure !== undefined ? model.editor.exposure : 1,
                 shadowIntensity: model.editor.shadowIntensity,
-                envImage: env.imageUrl
+                envImage: env.imageUrl,
+                enableAnimation: model.editor.enableAnimation !== undefined ? model.editor.enableAnimation : true
             }
         }
 
@@ -321,7 +323,8 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         const defaultSettings = {
             exposure: 1,
             shadowIntensity: 0.2,
-            envImage: env.imageUrl
+            envImage: env.imageUrl,
+            enableAnimation: true
         }
 
         return defaultSettings;
@@ -337,6 +340,18 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
     //         modelViewerElement.removeAttr("experimental-pmrem");
     //     }
     // }
+
+    function toggleAnimation () {
+        var modelViewerElement = angular.element(document.querySelector('#model-viewer'));
+        if ($scope.viewerSettings.enableAnimation) {
+            // adding attribute
+            modelViewerElement.attr("autoplay", "");
+        } else {
+            // removing attribute
+            modelViewerElement.removeAttr("autoplay");
+        }
+    }
+    
 
     function updateEnvImage () {
         var modelViewerElement = angular.element(document.querySelector('#model-viewer'));

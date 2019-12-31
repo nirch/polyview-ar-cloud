@@ -316,9 +316,8 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         }
 
         // if the enclosing iframe wants a specific bg color than using it
-        const iframeBgColor = $window.frameElement.getAttribute("background-color");
-        if (iframeBgColor) {
-            viewerSettings.bgColor = iframeBgColor;
+        if ($window.frameElement && $window.frameElement.getAttribute("background-color")) {
+            viewerSettings.bgColor = $window.frameElement.getAttribute("background-color");
         }
 
         return viewerSettings;

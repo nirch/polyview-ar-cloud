@@ -11,7 +11,7 @@ app.config(function ($routeProvider) {
 });
 
 app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, modelSrv,
-    deviceDetector, projectSrv, customerSrv, Fullscreen, $location, environmentSrv) {
+    deviceDetector, projectSrv, customerSrv, Fullscreen, $location, environmentSrv, $window) {
 
     // whether to show google viewer (default) or our viewer
     $scope.isGoogleViewer = $location.search().polyviewer ? false : true;
@@ -310,8 +310,15 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
                 exposure: model.editor.exposure !== undefined ? model.editor.exposure : 1,
                 shadowIntensity: model.editor.shadowIntensity,
                 envImage: env.imageUrl,
-                enableAnimation: model.editor.enableAnimation !== undefined ? model.editor.enableAnimation : true
+                enableAnimation: model.editor.enableAnimation !== undefined ? model.editor.enableAnimation : true,
+                bgColor: model.editor.bgColor
             }
+        }
+
+        // if the enclosing iframe wants a specific bg color than using it
+        const iframeBgColor = $window.frameElement.getAttribute("background-color");
+        if (iframeBgColor) {
+            viewerSettings.bgColor = iframeBgColor;
         }
 
         return viewerSettings;
@@ -324,7 +331,8 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
             exposure: 1,
             shadowIntensity: 0.2,
             envImage: env.imageUrl,
-            enableAnimation: true
+            enableAnimation: true,
+            bgColor: "#ffffff"
         }
 
         return defaultSettings;

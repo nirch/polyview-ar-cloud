@@ -15,6 +15,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
 
     // whether to show google viewer (default) or our viewer
     $scope.isGoogleViewer = $location.search().polyviewer ? false : true;
+    $scope.isGoogleViewerReady = false
 
     // this is to hide the fullscreen button from iOS devices until I will add the support
     $scope.isIOS = deviceDetector.os === "ios";
@@ -29,6 +30,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
             $scope.viewerSettings = settings;
             toggleAnimation();	
             updateEnvImage();
+            $scope.isGoogleViewerReady = true;
         });
 
         // Checking which viewer to show (Apple's AR Quick Look, Polyviewer or Clara viewer)

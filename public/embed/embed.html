@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div class="viewer-container" ng-if="isGoogleViewer" ng-show="isGoogleViewerReady">
+<div class="viewer-container" ng-if="isGoogleViewer">
     <model-viewer id="model-viewer" class="viewer-iframe" src="{{model.gltfSecured}}" ios-src="{{model.usdzUrl}}" ar camera-controls 
         background-color="{{viewerSettings.bgColor}}" exposure="{{viewerSettings.exposure}}" 
         shadow-intensity="{{viewerSettings.shadowIntensity}}"></model-viewer>

@@ -15,7 +15,10 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
 
     // whether to show google viewer (default) or our viewer
     $scope.isGoogleViewer = $location.search().polyviewer ? false : true;
-    $scope.isGoogleViewerReady = false;
+
+    // Loading the default settings first (later loading some more settings that need async loading)
+    // Doing this to avoid "black model" that happend when model-viewer loaded without data in params
+    $scope.viewerSettings = getDefaultViewerSettingsSync();
 
     // this is to hide the fullscreen button from iOS devices until I will add the support
     $scope.isIOS = deviceDetector.os === "ios";
@@ -30,7 +33,6 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
             $scope.viewerSettings = settings;
             toggleAnimation();	
             updateEnvImage();
-            $scope.isGoogleViewerReady = true;
         });
 
         // Checking which viewer to show (Apple's AR Quick Look, Polyviewer or Clara viewer)
@@ -334,17 +336,20 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         return regex.test(color)
     }
 
-    async function getDefaultViewerSettings() {
-        const defaultEnvId = "otCxXiSe6F";
-        const env = await environmentSrv.getById(defaultEnvId);
-        const defaultSettings = {
+    function getDefaultViewerSettingsSync() {
+        return {
             exposure: 1,
             shadowIntensity: 0.2,
-            envImage: env.imageUrl,
             enableAnimation: true,
             bgColor: "#ffffff"
         }
+    }
 
+    async function getDefaultViewerSettings() {
+        const defaultEnvId = "otCxXiSe6F";
+        const env = await environmentSrv.getById(defaultEnvId);
+        let defaultSettings = getDefaultViewerSettingsSync();
+        defaultSettings.envImage = env.imageUrl;
         return defaultSettings;
     }
 

@@ -11,11 +11,11 @@ app.config(function ($routeProvider) {
 });
 
 app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, modelSrv,
-    deviceDetector, projectSrv, customerSrv, Fullscreen, $location, environmentSrv, $window) {
+    deviceDetector, projectSrv, customerSrv, Fullscreen, $location, environmentSrv, $location) {
 
     // whether to show google viewer (default) or our viewer
     $scope.isGoogleViewer = $location.search().polyviewer ? false : true;
-    $scope.isGoogleViewerReady = false
+    $scope.isGoogleViewerReady = false;
 
     // this is to hide the fullscreen button from iOS devices until I will add the support
     $scope.isIOS = deviceDetector.os === "ios";
@@ -318,11 +318,20 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         }
 
         // if the enclosing iframe wants a specific bg color than using it
-        if ($window.frameElement && $window.frameElement.getAttribute("background-color")) {
-            viewerSettings.bgColor = $window.frameElement.getAttribute("background-color");
+        let customBgColor = $location.search()["background-color"];
+        if (customBgColor) {
+            if (isHexColor(customBgColor)) {
+                customBgColor = "#" + customBgColor;
+            }
+            viewerSettings.bgColor = customBgColor
         }
 
         return viewerSettings;
+    }
+
+    function isHexColor(color) {
+        const regex = /[0-9A-Fa-f]{6}/g;
+        return regex.test(color)
     }
 
     async function getDefaultViewerSettings() {

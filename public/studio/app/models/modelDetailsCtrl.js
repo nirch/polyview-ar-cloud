@@ -1,4 +1,4 @@
-app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $routeParams, $uibModal, $location) {
+app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, modelSrv, $routeParams, $uibModal, $location, $interval) {
 
     const DEFAULT_GLTF_UPLOAD_TEXT = "Choose glTF or GLB file";
     const DEFAULT_USDZ_UPLOAD_TEXT = "Choose USDZ file";
@@ -7,6 +7,7 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
     $scope.projects = [];
     $scope.showSuccessAlert = false;
     $scope.showErrorAlert = false;
+    $scope.showConvertingAlert = false;
 
     customerSrv.getActive().then(customer => {
         $scope.activeCustomer = customer
@@ -32,6 +33,8 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             $scope.showErrorAlert = false;
         } else if (type == "saving") {
             $scope.showSavingAlert = false;
+        } else if (type == "usdz") {
+            $scope.showConvertingAlert = false;
         }
     }
 
@@ -72,14 +75,28 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             console.log("settings saved successfully");
 
             $scope.showSavingAlert = false;
-            $scope.showSuccessAlert = true;
 
-            $scope.model = model;
-            $scope.projects.forEach(project => {
-                if (project.id === model.projectId) {
-                    $scope.selected.project = project;
-                }
-            });
+            // Checking if USDZ conversion is needed
+            if ($scope.selected.gltf) {
+                $scope.showConvertingAlert = true;
+
+                let usdzConversionInterval = $interval(() => {
+                    modelSrv.getById($scope.model.id).then(checkModel => {
+                        // checking that there is a new USDZ file (not similar to the previous one)
+                        if (checkModel.usdzUrl && checkModel.usdzUrl !== $scope.model.usdzUrl) {
+                            // stop intetval
+                            $interval.cancel(usdzConversionInterval);
+                            $scope.showConvertingAlert = false;
+
+                            modelSuccessfullySaved(checkModel);
+                        }
+                    })
+                }, 1000);
+            } else {
+                modelSuccessfullySaved(model);
+            }
+
+
 
         }, function (err) {
             console.error(err);
@@ -88,6 +105,21 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
             $scope.showErrorAlert = true;
 
         });
+    }
+
+    function modelSuccessfullySaved(savedModel) {
+        $scope.showSuccessAlert = true;
+
+        $scope.model = savedModel;
+        $scope.projects.forEach(project => {
+            if (project.id === savedModel.projectId) {
+                $scope.selected.project = project;
+            }
+        });
+        $scope.selected.gltf = null;
+        $scope.selected.usdz = null;
+        $scope.selected.thumbnail = null;
+
     }
 
     $scope.changeGltf = function() {
@@ -105,7 +137,8 @@ app.controller("modelDetailsCtrl", function ($scope, customerSrv, projectSrv, mo
     }
 
     $scope.usdzText = function() {
-        return $scope.selected.usdz ? $scope.selected.usdz.name : DEFAULT_USDZ_UPLOAD_TEXT;
+        // return $scope.selected.usdz ? $scope.selected.usdz.name : DEFAULT_USDZ_UPLOAD_TEXT;
+        return "USDZ files are automatically generated from the uploaded glTF/GLB"
     }
 
     $scope.deleteModel = function() {

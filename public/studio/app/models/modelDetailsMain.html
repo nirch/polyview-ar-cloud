@@ -42,7 +42,8 @@
         <label class="col-sm-2 col-form-label">glTF / glb</label>
         <div class="col-sm-8">
             <div class="custom-file">
-                <input type="file" class="custom-file-input" id="gltf" accept=".gltf,.glb" custom-on-change="changeGltf">
+                <input type="file" class="custom-file-input" id="gltf" accept=".gltf,.glb"
+                    custom-on-change="changeGltf">
                 <label class="custom-file-label" for="gltf">{{gltfText()}}</label>
                 <small class="text-muted">Viewer and Android AR uses this format</small>
             </div>
@@ -53,7 +54,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <!-- <div class="form-group row">
         <label class="col-sm-2 col-form-label">USDZ</label>
         <div class="col-sm-8">
             <div class="custom-file">
@@ -66,8 +67,18 @@
             <a name="" id="" class="btn btn-link text-dark" ng-href="{{model.usdzUrl}}" role="button"
                 ng-show="model.usdzUrl">Download <i class="fas fa-file-download"></i></a>
         </div>
-    </div>
+    </div> -->
 
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">USDZ</label>
+        <div class="col-sm-8 d-flex align-items-center">
+            <small class="text-muted">iOS AR uses this format. USDZ files are automatically generated</small>
+        </div>
+        <div class="col-sm-2">
+            <a name="" id="" class="btn btn-link text-dark" ng-href="{{model.usdzUrl}}" role="button"
+                ng-show="model.usdzUrl">Download <i class="fas fa-file-download"></i></a>
+        </div>
+    </div>
 
     <div class="form-group row">
         <div class="col-sm-2">Hosted Webpage</div>
@@ -118,8 +129,12 @@
     <div class="form-group row apply-btns-row">
         <div ng-if="showSuccessAlert" uib-alert class="alert-success" close="closeAlert('success')">
             <strong>Success!</strong> Model successfully saved</div>
-        <div ng-if="showSavingAlert" uib-alert class="alert-warning" close="closeAlert('saving')"><strong>Saving!</strong> Please wait... <div
-                class="spinner-border spinner-border-sm" role="status">
+        <div ng-if="showSavingAlert" uib-alert class="alert-warning" close="closeAlert('saving')">
+            <strong>Saving!</strong> Please wait... <div class="spinner-border spinner-border-sm" role="status">
+            </div>
+        </div>
+        <div ng-if="showConvertingAlert" uib-alert class="alert-warning" close="closeAlert('usdz')">
+            <strong>Creating USDZ!</strong> Please wait... <div class="spinner-border spinner-border-sm" role="status">
             </div>
         </div>
         <div ng-if="showErrorAlert" uib-alert class="alert-danger" close="closeAlert('error')"><strong>Failure!</strong>

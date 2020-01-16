@@ -302,7 +302,7 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
 
         if (!model.editor) {
             // loading default settings
-            viewerSettings = await getDefaultViewerSettings();
+            viewerSettings = getDefaultViewerSettingsSync();
         } else {
             let env = {};
             if (model.editor.environmentId) {
@@ -347,17 +347,18 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
             exposure: 1,
             shadowIntensity: 0.2,
             enableAnimation: true,
-            bgColor: "#ffffff"
+            bgColor: "#ffffff",
+            envImage: "https://parsefiles.back4app.com/b0oiXcJs4u7QGx8dA08kuSIHs9qkP8far3o9ZIcE/f9799d1dadb22dd8adb570fe95625478_HDRI_Environment_01.hdr"
         }
     }
 
-    async function getDefaultViewerSettings() {
-        const defaultEnvId = "otCxXiSe6F";
-        const env = await environmentSrv.getById(defaultEnvId);
-        let defaultSettings = getDefaultViewerSettingsSync();
-        defaultSettings.envImage = env.imageUrl;
-        return defaultSettings;
-    }
+    // async function getDefaultViewerSettings() {
+    //     const defaultEnvId = "otCxXiSe6F";
+    //     const env = await environmentSrv.getById(defaultEnvId);
+    //     let defaultSettings = getDefaultViewerSettingsSync();
+    //     defaultSettings.envImage = env.imageUrl;
+    //     return defaultSettings;
+    // }
 
     // function togglePmrem () {
     //     var modelViewerElement = angular.element(document.querySelector('#model-viewer'));

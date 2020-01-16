@@ -322,10 +322,10 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
         // if the enclosing iframe wants a specific bg color than using it
         let customBgColor = $location.search()["background-color"];
         if (customBgColor) {
-            if (isHexColor(customBgColor)) {
-                customBgColor = "#" + customBgColor;
+            customBgColor = isHexColor(customBgColor) ? "#" + customBgColor : customBgColor;
+            if (isValidColor(customBgColor)) {
+                viewerSettings.bgColor = customBgColor
             }
-            viewerSettings.bgColor = customBgColor
         }
 
         return viewerSettings;
@@ -334,6 +334,12 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
     function isHexColor(color) {
         const regex = /[0-9A-Fa-f]{6}/g;
         return regex.test(color)
+    }
+
+    function isValidColor(color) {
+        var s = new Option().style;
+        s.color = color;
+        return s.color;
     }
 
     function getDefaultViewerSettingsSync() {

@@ -150,12 +150,12 @@ app.controller("modelEditorCtrl", function ($scope, environmentSrv, $routeParams
     function getDefaultEditorSettings() {
         let defaultSettings = {
             exposure: 1,
-            shadowIntensity: 0.2,
+            shadowIntensity: 1,
             bgColor: "#ffffff",
             enableAnimation: true
         }
 
-        let defaultEnvId = "otCxXiSe6F";
+        let defaultEnvId = "mGFelCGvy9";
         defaultSettings.selectedEnvironment = getEnvironmentById(defaultEnvId)
 
         return defaultSettings;

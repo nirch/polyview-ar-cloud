@@ -7,6 +7,7 @@ app.factory("userSrv", function (customerSrv) {
          const customer = await customerSrv.getActive();
          if (user.get("customer") && user.get("customer").id === customer.id) {
             console.log('Logged in user', user);
+            if (localStorage.admin) localStorage.removeItem("admin");
             return user;   
          } else {
             var queryRole = new Parse.Query(Parse.Role);
@@ -18,6 +19,7 @@ app.factory("userSrv", function (customerSrv) {
             var adminUser = await queryAdmins.first();
 
             if (adminUser) {
+                localStorage.admin = true;
                 return user;
             } else {
                 await logout();
@@ -28,6 +30,7 @@ app.factory("userSrv", function (customerSrv) {
 
     async function logout() {
         await Parse.User.logOut();
+        if (localStorage.admin) localStorage.removeItem("admin");
         console.log('User logged out');
         return;
     }

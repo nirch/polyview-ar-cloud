@@ -32,6 +32,20 @@ app.controller("modelsCtrl", function ($scope, customerSrv, projectSrv, modelSrv
     }
 
     $scope.newModel = function () {
+        if (!localStorage.admin && $scope.models.length >= 3) {
+            // Opening new model modal
+            let modalInstance = $uibModal.open({
+                templateUrl: 'app/models/modelLimit.html',
+                controller: 'modelLimitCtrl',
+            });
+            
+            modalInstance.result.then(function (newModel) {
+            }, function () {
+            });
+            
+            return;
+        }
+
         // Opening new model modal
         let modalInstance = $uibModal.open({
             templateUrl: 'app/models/newModel.html',

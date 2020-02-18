@@ -11,6 +11,8 @@ app.controller("newModelCtrl", function ($scope, $uibModalInstance, customerSrv,
     $scope.create = function () {
         modelSrv.createModel($scope.model.displayName, $scope.model.project, $scope.model.techName).then(model => {
             $uibModalInstance.close(model);
+        }).catch(error => {
+            alert(JSON.stringify(error));
         })
     }
 

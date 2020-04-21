@@ -20,5 +20,5 @@
         background-color="{{viewerSettings.bgColor}}" exposure="{{viewerSettings.exposure}}" 
         shadow-intensity="{{viewerSettings.shadowIntensity}}"
         environment-image="{{viewerSettings.envImage}}"></model-viewer>
-    <i ng-hide="isIOS" class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
+    <i ng-hide="!enableFullscreen || isIOS" class="viewer-expand fas" ng-class="{'fa-expand-arrows-alt': !isInFullScreen, 'fa-compress-arrows-alt': isInFullScreen}" ng-click="toggleFullScreen()"></i>    
 </div>

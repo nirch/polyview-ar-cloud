@@ -23,6 +23,8 @@ app.controller("embedCtrl", function ($rootScope, $scope, $sce, $routeParams, mo
     // this is to hide the fullscreen button from iOS devices until I will add the support
     $scope.isIOS = deviceDetector.os === "ios";
 
+    $scope.enableFullscreen = $location.search().fullscreen ? true : false;
+
     modelSrv.getById($routeParams.modelId).then(model => {
         $scope.model = model;
         $scope.model.claraEmbedId = $sce.trustAsResourceUrl(

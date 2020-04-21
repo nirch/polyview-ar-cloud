@@ -21,7 +21,7 @@ app.controller('modelCtrl', function($scope, $routeParams, customerSrv, projectS
                 if ($location.search().polyviewer) {
                     $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id + "?polyviewer");
                 } else {
-                    $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id);
+                    $scope.model.embedURL = $sce.trustAsResourceUrl("embed/#!/" + $scope.model.id + "?fullscreen");
                 }
 
                 $document.ready(function() {
